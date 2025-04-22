@@ -1,24 +1,16 @@
+@extends('layouts.app')
+    @section('content')
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - Puppy Power Academy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
 </head>
 <body>
 
-<header>
-    <h1 class="logo"><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/shop" class="active">Shop</a>
-        <a href="/training">Training</a>
-        <a href="/opvang">Dagopvang</a>
-        <a href="/contact">Contact</a>
-    </nav>
-</header>
+
 
 <main class="shop-page">
 
@@ -78,9 +70,7 @@
 
 </main>
 
-<footer>
-    &copy; {{ date('Y') }} Puppy Power Academy. Alle rechten voorbehouden.
-</footer>
 
 </body>
 </html>
+@endsection

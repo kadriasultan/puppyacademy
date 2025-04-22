@@ -1,9 +1,19 @@
-body {
+html, body {
+    height: 100%;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+
 }
 
+body {
+    min-height: 100vh; /* 100% van de hoogte van het scherm */
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+}
 .logo{
     text-align: left;
     font-size: medium;
@@ -33,6 +43,10 @@ nav a {
     gap: 30px;
     padding: 40px;
     flex-wrap: wrap; /* zodat het op mobiel onder elkaar gaat */
+}
+a {
+    text-decoration: none; /* Verwijdert de onderstreping */
+    color: inherit;
 }
 
 .inhoud {
@@ -126,5 +140,158 @@ footer {
     color: white;
     text-align: center;
     padding: 1rem;
-    margin-top: 2rem;
+    margin-top: auto; /* Zorgt ervoor dat de footer naar beneden wordt geduwd */
+    position: relative;
+}
+/* Contact Page Styles  */
+.contact-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f0f8ff; /* Zelfde als shop-hero achtergrond */
+}
+
+.contact-page h1 {
+    font-size: 1.8rem; /* Gelijk aan shop-heading */
+    color: #264653; /* Donkerblauwe kleur uit shop-heading */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.contact-page p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #264653;
+}
+
+.contact-form {
+    background-color: #fff; /* Witte achtergrond zoals product-card */
+    border-radius: 12px; /* Gelijk aan product-card */
+    padding: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Zelfde als product-card */
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #264653;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Gelijk aan buttons */
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+}
+
+.form-group textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+button[type="submit"] {
+    background-color: #2a9d8f; /* Zelfde als product-card button */
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    width: 100%;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover {
+    background-color: #008080; /* Donkerder, zoals header */
+}
+
+.contact-info {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info h2 {
+    font-size: 1.5rem;
+    color: #264653;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem; /* Gelijk aan shop-container */
+}
+
+.info-column {
+    background-color: #f9f9f9; /* Lichtgrijs zoals inhoud */
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.info-column h3 {
+    color: #2a9d8f; /* Groen/blauw zoals buttons */
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.info-column p {
+    margin: 0.5rem 0;
+    color: #264653;
+    text-align: center;
+}
+
+/* Alert styling zoals in andere pagina's */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+/* Responsive aanpassingen */
+@media (max-width: 768px) {
+    .contact-page {
+        padding: 1rem;
+    }
+
+    .contact-form, .contact-info {
+        padding: 1rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
 }
