@@ -59,6 +59,67 @@ nav a {
     font-size: 18px;
 }
 
+.shop-heading {
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem 2rem;
+    color: #264653;
+    text-align: center;
+}
+
+.shop-hero {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f0f8ff;
+}
+
+.shop-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 0 2rem 2rem 2rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-card button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.training-container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.training-card {
+    background-color: #e9c46a;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 
 footer {
     background-color: #264653;
