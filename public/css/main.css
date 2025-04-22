@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.logo{
+    text-align: left;
+    font-size: medium;
+}
+header {
+    background-color: #008080;
+    padding: 1rem;
+    text-align: end;
+    color: white;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+}
+
+
+.hero {
+    background-color: #E0FFFF	;
+    padding: 2rem;
+    text-align: center;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+    flex-wrap: wrap; /* zodat het op mobiel onder elkaar gaat */
+}
+
+.inhoud {
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.inhoud:hover {
+    transform: scale(1.05);
+}
+
+.inhoud i {
+    font-size: 40px;
+    color: #000000; /* of een andere kleur die bij je branding past */
+}
+
+.inhoud h3 {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+
+footer {
+    background-color: #264653;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
