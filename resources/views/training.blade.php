@@ -25,9 +25,9 @@
                 <p>Voor honden met gedragsproblemen of extra begeleiding nodig hebben.</p>
             </div>
         </div>
-
+        <h2>Trainingvedios</h2>
         <section class="training-form-section">
-            <h2>Trainingveldos</h2>
+<h2>Inschrijven</h2>
             <div class="kees-training-toggle">
                 <h3 class="toggle-title">Kees de training <span class="toggle-icon">+</span></h3>
                 <div class="training-list" style="display: none;">
