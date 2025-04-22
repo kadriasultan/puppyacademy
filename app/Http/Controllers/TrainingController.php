@@ -10,4 +10,5 @@ class TrainingController extends Controller
     {
         return view('training');
     }
+
 }

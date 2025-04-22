@@ -117,23 +117,218 @@ a {
     border-radius: 8px;
     cursor: pointer;
 }
-
-.training-container {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
+/* Training Platform Styles */
+.training-platform-page {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 2rem;
 }
 
-.training-card {
-    background-color: #e9c46a;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+.training-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
 }
 
+.training-nav a {
+    text-decoration: none;
+    color: #264653;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.training-nav a.active {
+    background-color: #2a9d8f;
+    color: white;
+}
+
+.training-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.training-header h1 {
+    font-size: 2.5rem;
+    color: #264653;
+    margin-bottom: 0.5rem;
+}
+
+.training-header h2 {
+    font-size: 1.8rem;
+    color: #2a9d8f;
+    font-weight: normal;
+}
+
+.training-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.training-card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.training-card:hover {
+    transform: translateY(-5px);
+}
+
+.training-card h3 {
+    color: #2a9d8f;
+    margin-bottom: 1rem;
+}
+
+.training-form-section {
+    background-color: #e9f5f3;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.training-form-section h2 {
+    color: #264653;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.training-form-section h3 {
+    color: #2a9d8f;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: normal;
+}
+
+.training-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.training-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #264653;
+    font-weight: 500;
+}
+
+.training-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+/* Kees de training toggle styles */
+.kees-training-toggle {
+    margin-bottom: 2rem;
+    cursor: pointer;
+}
+
+.toggle-title {
+    color: #2a9d8f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f0f8ff;
+    border-radius: 6px;
+}
+
+.toggle-icon {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.training-list {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+.training-item {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.training-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.training-item h4 {
+    color: #264653;
+    margin-bottom: 0.5rem;
+}
+
+.training-item p {
+    color: #555;
+}
+/* Training selectie stijlen */
+.training-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.training-card.selected {
+    border: 2px solid #2a9d8f;
+    box-shadow: 0 0 10px rgba(42, 157, 143, 0.3);
+    transform: translateY(-5px);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Hover effect voor training cards */
+.training-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.btn-primary {
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #008080;
+}
+
+/* Responsive aanpassingen */
+@media (max-width: 768px) {
+    .training-nav {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .training-cards-container {
+        grid-template-columns: 1fr;
+    }
+}
 
 footer {
     background-color: #264653;
