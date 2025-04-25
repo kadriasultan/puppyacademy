@@ -16,6 +16,14 @@
     <p>Dé plek voor puppytrainingen, hondenspullen en professionele dagopvang.</p>
     <a href="/shop">Bekijk onze Shop</a>
 </section>
+<div class="gallery">
+    <div class="slides">
+        <img src="https://webdog.doggywonderland.nl/images/K6A5138-DoggywonderlandhondenopvangkennelvrijroedelKitty3.jpeg" class="slide active">
+        <img src="https://www.dierenpensionrenswoude.nl/wp-content/uploads/2022/09/foto-groep-25-1.jpg" class="slide">
+        <img src="http://www.deroedelthuis.com/wp-content/uploads/simple_photo_gallery/1/p1040326.jpg" class="slide">
+    </div>
+</div>
+
 <div class="container">
     <a href="/shop">
         <div class="inhoud">

@@ -1,59 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="contact-page">
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+    <section class="hero">
+        <h2>Contacteer Ons</h2>
+        <p>We horen graag van je! Vul het onderstaande formulier in en wij nemen zo snel mogelijk contact met je op.</p>
+    </section>
 
-        <h1>Contacteer Ons</h1>
-        <p>Hebt u een vraag? Neem contact met ons op.</p>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-        <form method="POST" action="{{ route('contact.send') }}" class="contact-form">
+    <div class="contact-form-container">
+        <form action="{{ route('contact.store') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="name">Naam</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
+                @error('name')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
             </div>
-
             <div class="form-group">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror">
+                @error('email')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
             </div>
-
             <div class="form-group">
-                <label for="message">Uw vraag</label>
-                <textarea id="message" name="message" required></textarea>
+                <label for="message">Bericht</label>
+                <textarea id="message" name="message" class="form-control @error('message') is-invalid @enderror">{{ old('message') }}</textarea>
+                @error('message')
+                <span class="invalid-feedback">{{ $message }}</span>
+                @enderror
             </div>
-
-            <button type="submit">Verzenden</button>
+            <button type="submit" class="btn btn-primary">Verstuur Bericht</button>
         </form>
+    </div>
 
-        <div class="contact-info">
-            <h2>Onze locatie:</h2>
-
-            <div class="info-grid">
-                <div class="info-column">
-                    <h3>Contactgegevens</h3>
-                    <p>Telefoon: 012-3456789</p>
-                    <p>Email: info@puppyacademy.nl</p>
-                </div>
-
-                <div class="info-column">
-                    <h3>Locatie</h3>
-                    <p>Hondenstraat 123</p>
-                    <p>1234AB Amsterdam</p>
-                </div>
-
-                <div class="info-column">
-                    <h3>Openingstijden</h3>
-                    <p>Ma-Vr: 9:00 - 18:00</p>
-                    <p>Za: 10:00 - 16:00</p>
-                    <p>Zo: Gesloten</p>
-                </div>
-            </div>
-        </div>
+    <div class="contact-info">
+        <h3>Contactgegevens</h3>
+        <p>Adres: Hondenstraat 123, 1234 AB Hondenstad</p>
+        <p>Telefoon: +31 6 12345678</p>
+        <p>E-mail: info@hondenopvang.nl</p>
     </div>
 @endsection
