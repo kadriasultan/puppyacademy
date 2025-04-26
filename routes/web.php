@@ -1,19 +1,28 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DagopvangController;
-use Illuminate\Support\Facades\Auth;
 
-Auth::routes();
+Route::get('/', function () {
+    return view('welcome');
+});
 
-
-// ✅ Dashboard route (alleen voor ingelogde gebruikers)
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
 
 // ✅ Dagopvang routes (GET en POST)
 Route::get('/dagopvang', [DagopvangController::class, 'index'])->middleware('auth')->name('dagopvang');
