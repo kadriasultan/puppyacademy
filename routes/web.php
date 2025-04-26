@@ -42,3 +42,8 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/', function () {
     return view('welcome');
 });
+// Payment page route (GET)
+Route::get('/payment', [ShopController::class, 'showPaymentPage'])->middleware('auth')->name('payment');
+
+// Process payment route (POST)
+Route::post('/payment', [ShopController::class, 'processPayment'])->name('payment.process');
