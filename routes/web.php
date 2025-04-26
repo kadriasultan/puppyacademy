@@ -25,7 +25,7 @@ require __DIR__.'/auth.php';
 
 
 // ✅ Dagopvang routes (GET en POST)
-Route::get('/dagopvang', [DagopvangController::class, 'index'])->middleware('auth')->name('dagopvang');
+Route::get('/dagopvang', [DagopvangController::class, 'index'])->name('dagopvang');
 Route::post('/dagopvang', [DagopvangController::class, 'store'])->middleware('auth')->name('dagopvang.store');
 
 // ✅ Shop route
