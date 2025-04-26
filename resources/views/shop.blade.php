@@ -4,7 +4,7 @@
     <main class="shop-page">
 
         <!-- Winkelmandje bovenaan rechts -->
-        <div id="winkelmandje" style="position: fixed; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.9); border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 240px; z-index: 999; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <div id="winkelmandje" style="position: fixed; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.9); border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 60px; z-index: 999; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
             <h4 style="margin: 0; display: flex; align-items: center;">
                 🛒
                 <span id="cart-count" style="background: red; color: white; border-radius: 50%; padding: 2px 8px; font-size: 14px; margin-left: 8px;">0</span>
@@ -24,7 +24,7 @@
 
         <!-- Shop secties -->
         <section class="shop-section">
-            <h2 class="shop-heading">🐶 Cursussen</h2>
+            <h2 class="shop-heading">Cursussen</h2>
             <div class="shop-container">
                 @foreach ([
                     ['img' => 'course1.jpg', 'title' => 'Puppy Start', 'desc' => 'Leer de basiscommando’s en socialisatie voor pups.', 'prijs' => '29,99'],
@@ -43,7 +43,7 @@
         </section>
 
         <section class="shop-section">
-            <h2 class="shop-heading">🧠 DIY-pakketten</h2>
+            <h2 class="shop-heading">DIY-pakketten</h2>
             <div class="shop-container">
                 @foreach ([
                     ['img' => 'diy1.jpg', 'title' => 'Snuffelmat', 'desc' => 'Zelf maken en gebruiken om mentaal bezig te zijn.', 'prijs' => '15,99'],

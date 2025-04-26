@@ -460,7 +460,7 @@ button[type="submit"]:hover {
 
 .alert-success {
     background-color: #d4edda;
-    color: #155724;
+    color: #155751;
     border: 1px solid #c3e6cb;
 }
 
@@ -472,7 +472,7 @@ button[type="submit"]:hover {
 
 .alert-success {
     background-color: #d4edda;
-    color: #155724;
+    color: #0e4e50;
     border: 1px solid #c3e6cb;
 }
 /* Responsive aanpassingen */
@@ -542,7 +542,7 @@ button[type="submit"]:hover {
 
 .cta .btn {
     display: inline-block;
-    background-color: #10b981;
+    background-color: #08775e;
     color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -552,7 +552,7 @@ button[type="submit"]:hover {
 }
 
 .cta .btn:hover {
-    background-color: #059669;
+    background-color: #067a71;
 }
 .foto-galerij {
     text-align: center;
@@ -632,7 +632,7 @@ button[type="submit"]:hover {
 .contact-form-container button {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background-color: #10b981;
+    background-color: #066a5e;
     color: white;
     border-radius: 0.5rem;
     font-weight: bold;
