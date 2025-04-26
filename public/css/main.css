@@ -17,12 +17,24 @@ main {
 .logo{
     text-align: left;
     font-size: medium;
+    width: 50%;
 }
 header {
     background-color: #008080;
     padding: 1rem;
     text-align: end;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     color: white;
+}
+nav {
+    justify-self: flex-end;
+    width: 50%;
 }
 
 nav a {

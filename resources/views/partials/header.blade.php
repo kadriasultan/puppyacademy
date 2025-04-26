@@ -1,6 +1,7 @@
 <header>
+    <div class="logo">
     <h1 class="logo"><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
-    <div class="logo"> @if (Auth::check())
+     @if (Auth::check())
             <a> Welkom {{ Auth::user()->name }}! </a>
 
             <div>
