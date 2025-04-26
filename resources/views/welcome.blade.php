@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
@@ -31,7 +32,7 @@
             <h3>Shop voor hondenproduct</h3>
         </div>
     </a>
-    <a href="/opvang">
+    <a href="/dagopvang">
     <div class="inhoud">
         <h1><i class="fa-solid fa-house-chimney"></i></h1>
         <h3>Dagopvang</h3>
