@@ -4,7 +4,7 @@
             <a> Welkom {{ Auth::user()->name }}! </a>
 
             <div>
-                <x-responsive-nav-link :href="route('profile.edit')">
+                <x-responsive-nav-link :href="route('profile')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
