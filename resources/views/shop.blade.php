@@ -3,24 +3,7 @@
 @section('content')
     <main class="shop-page">
 
-        <!-- Winkelmandje bovenaan rechts -->
-        <div id="winkelmandje" style="position: fixed; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.9);  padding: 15px; border-radius: 8px; width: 120px; z-index: 999; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <h4 style="margin: 0; display: flex; align-items: center;">
-                 🛒
-                <span id="cart-count" style="background: red; color: white; border-radius: 50%; padding: 2px 8px; font-size: 14px; margin-left: 8px;">0</span>
-            </h4>
 
-            <!-- Productenlijst -->
-            <ul id="cart-items" style="list-style: none; padding: 10px 0 0 0; margin: 0; display: none;"></ul>
-
-            <!-- Totaalprijs -->
-            <p id="total-price" style="margin-top: 10px; font-weight: bold; display: none;">Totaal: €0,00</p>
-
-            <!-- Bestelling afronden knop -->
-            <button id="checkout-button" style="margin-top: 10px; background: green; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; display: none; cursor: pointer;">
-                Bestelling afronden
-            </button>
-        </div>
 
         <!-- Shop secties -->
         <section class="shop-section">
