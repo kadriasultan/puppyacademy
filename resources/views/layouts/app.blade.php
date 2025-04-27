@@ -11,7 +11,7 @@
 <body>
 <!-- Loading Spinner -->
 <div id="loading-spinner" class="loading-spinner">
-    <img src="images/paw.png" alt="Loading..." class="spinner-image">
+    <div class="spinner"></div>
 </div>
 
 
@@ -31,8 +31,8 @@
         spinner.style.transition = 'opacity 0.5s ease';
         spinner.style.opacity = '0'; // fade-out na laden
         setTimeout(() => {
-            spinner.style.display = 'none'; // verbergen na fade-out
-        }, 500); // tijd moet gelijk zijn aan transition (0.5s)
+            spinner.style.display = 'none';
+        }, 500);
     });
 </script>
 

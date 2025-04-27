@@ -117,3 +117,86 @@
         updateCart();
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.bestellen-button');
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const winkelmandje = document.getElementById('winkelmandje');
+        const totalPriceElement = document.getElementById('total-price');
+        const checkoutButton = document.getElementById('checkout-button');
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function updateCart() {
+            cartItems.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.style.marginBottom = '10px';
+                li.innerHTML = `
+                <strong>${item.title}</strong><br>€${item.price.toFixed(2).replace('.', ',')}
+                <button style="background: red; color: white; border: none; border-radius: 5px; margin-top: 5px; cursor: pointer;">Verwijderen</button>
+            `;
+
+                li.querySelector('button').addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    cart.splice(index, 1);
+                    saveCart();
+                    updateCart();
+                });
+
+                cartItems.appendChild(li);
+                total += item.price;
+            });
+
+            cartCount.innerText = cart.length;
+
+            if (cart.length > 0) {
+                totalPriceElement.innerText = `Totaal: €${total.toFixed(2).replace('.', ',')}`;
+            }
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const productCard = button.closest('.product-card');
+                const title = productCard.querySelector('.product-title').innerText;
+                const priceText = productCard.querySelector('.prijs').innerText.replace('€', '').replace(',', '.');
+                const price = parseFloat(priceText);
+
+                cart.push({ title, price });
+                saveCart();
+                updateCart();
+            });
+        });
+
+        winkelmandje.addEventListener('click', function () {
+            if (cartItems.style.display === 'none' || cartItems.style.display === '') {
+                cartItems.style.display = 'block';
+                if (cart.length > 0) {
+                    totalPriceElement.style.display = 'block';
+                    checkoutButton.style.display = 'block';
+                }
+            } else {
+                cartItems.style.display = 'none';
+                totalPriceElement.style.display = 'none';
+                checkoutButton.style.display = 'none';
+            }
+        });
+
+        checkoutButton.addEventListener('click', function (e) {
+            e.stopPropagation();
+            window.location.href = '{{ route("payment") }}';
+        });
+
+        // Init winkelmandje bij pagina laden
+        updateCart();
+    });
+</script>
+
