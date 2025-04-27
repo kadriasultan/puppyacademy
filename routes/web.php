@@ -5,15 +5,21 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DagopvangController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
 
 Route::get('/dashboard', function () {
+    if (auth()->user()->role !== 'admin') {
+        abort(403);
+    }
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware('auth')->name('dashboard');
+
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
+
 Route::middleware('auth')->group(function () {
     // View profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -46,10 +52,7 @@ Route::post('/training/register', [TrainingController::class, 'register'])->name
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
-// ✅ Home route (optioneel, naar je homepage)
-Route::get('/', function () {
-    return view('welcome');
-});
+
 // Payment page route (GET)
 Route::get('/payment', [ShopController::class, 'showPaymentPage'])->middleware('auth')->name('payment');
 
