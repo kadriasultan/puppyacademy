@@ -40,6 +40,8 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 // ✅ Training route
 Route::get('/training', [TrainingController::class, 'index'])->name('training');
 
+Route::post('/training/register', [TrainingController::class, 'register'])->name('training.register');
+
 // ✅ Contact routes (GET en POST)
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');

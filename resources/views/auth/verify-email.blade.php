@@ -1,3 +1,6 @@
+@extends('layouts.app')
+@section('title', 'Puppy Power Academy - Home')
+@section('content')
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
@@ -29,3 +32,4 @@
         </form>
     </div>
 </x-guest-layout>
+@endsection

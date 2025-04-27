@@ -2,9 +2,12 @@
 
 @section('content')
     <div class="training-platform-page">
-
-
         <section class="training-header">
+            @if (session('status'))
+                <div class="mb-4 text-sm text-green-600" style="color: green" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
             <h1>Trainingsplatform</h1>
             <h2>Trainingen</h2>
         </section>
@@ -25,63 +28,35 @@
                 <p>Voor honden met gedragsproblemen of extra begeleiding nodig hebben.</p>
             </div>
         </div>
-        <h2>Trainingvedios</h2>
-        <section class="training-form-section">
-<h2>Inschrijven</h2>
-            <div class="kees-training-toggle">
-                <h3 class="toggle-title">Kees de training <span class="toggle-icon">+</span></h3>
-                <div class="training-list" style="display: none;">
-                    <div class="training-item">
-                        <h4>Puppytraining</h4>
-                        <p>Leer je pup de basiscommando's op een speelse manier.</p>
-                    </div>
-                    <div class="training-item">
-                        <h4>Vuurwerkangst</h4>
-                        <p>Training om je hond te helpen bij geluiden zoals vuurwerk.</p>
-                    </div>
-                    <div class="training-item">
-                        <h4>Gedragstraining</h4>
-                        <p>Voor honden met gedragsproblemen of extra begeleiding nodig hebben.</p>
-                    </div>
-                </div>
-            </div>
 
-            <form class="training-form">
+        <h2>Training Videos</h2>
+        <section class="training-form-section">
+            <h2>Inschrijven</h2>
+
+            <form class="training-form" method="POST" action="{{ route('training.register') }}">
+                @csrf
+
+                <div class="form-group">
+                    <label for="training">Kies je training</label>
+                    <select id="training" name="training" required class="form-control">
+                        <option value="puppytraining">Puppytraining</option>
+                        <option value="vuurwerkangst">Vuurwerkangst</option>
+                        <option value="gedragstraining">Gedragstraining</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="name">Naam</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" required class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label for="email">E-mailadres</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Wachtwoord</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="email" id="email" name="email" required class="form-control">
                 </div>
 
                 <button type="submit" class="btn-primary">Inschrijven</button>
             </form>
         </section>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleTitle = document.querySelector('.toggle-title');
-            const trainingList = document.querySelector('.training-list');
-            const toggleIcon = document.querySelector('.toggle-icon');
-
-            toggleTitle.addEventListener('click', function() {
-                if (trainingList.style.display === 'none') {
-                    trainingList.style.display = 'block';
-                    toggleIcon.textContent = '-';
-                } else {
-                    trainingList.style.display = 'none';
-                    toggleIcon.textContent = '+';
-                }
-            });
-        });
-    </script>
 @endsection
