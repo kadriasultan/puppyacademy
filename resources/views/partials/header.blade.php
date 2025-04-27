@@ -3,19 +3,7 @@
         <h1 class="logo"><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
         @if (Auth::check())
             <a> Welkom {{ Auth::user()->name }}! </a>
-            <div>
-                <x-responsive-nav-link :href="route('profile')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
 
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                                           onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
         @else
         @endif
     </div>
@@ -26,116 +14,47 @@
         <a href="/training">Training</a>
         <a href="/dagopvang">Dagopvang</a>
         <a href="/contact">Contact</a>
+        @if (!Auth::check())
         <a href="/login">Inloggen</a>
         <a href="/register">Register</a>
+        @else
+                <a href="/profile">
+                    {{ __('Profile') }}
+                </a>
 
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="/logout"
+                                           onclick="event.preventDefault(); this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
+
+        @endif
         <!-- Winkelmandje in de navigatie -->
-        <div id="winkelmandje" style="position: relative; cursor: pointer; padding: 8px 12px; border-radius: 8px; background-color: #026556; color: white;">
+        <div id="winkelmandje" >
             <i class="fa-solid fa-cart-shopping"></i>
-            <span id="cart-count" style="background: red; color: white; border-radius: 50%; padding: 2px 8px; font-size: 14px; margin-left: 5px;">0</span>
+            <span id="cart-count">0</span>
         </div>
     </nav>
 </header>
 
-<!-- Winkelmandje popup bovenaan rechts -->
-<div id="cart-popup" style="position: fixed; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 8px; width: 200px; z-index: 999; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: none;">
-    <h4 style="margin: 0; display: flex; align-items: center;">
+<!-- Winkelmandje -->
+<div id="cart-popup">
         🛒
-        <span id="cart-count-popup" style="background: red; color: white; border-radius: 50%; padding: 2px 8px; font-size: 14px; margin-left: 8px;">0</span>
-    </h4>
+        <span id="cart-count-popup"></span>
+
 
     <ul id="cart-items" style="list-style: none; padding: 10px 0 0 0; margin: 0; display: none;"></ul>
 
     <p id="total-price" style="margin-top: 10px; font-weight: bold; display: none;">Totaal: €0,00</p>
 
-    <button id="checkout-button" style="margin-top: 10px; background: green; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; display: none; cursor: pointer;">
+    <button id="checkout-button">
         Bestelling afronden
     </button>
 </div>
 
-<style>
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        background-color: #026556;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        position: relative;
-    }
 
-    .logo h1 {
-        font-size: 24px;
-        display: flex;
-        align-items: center;
-        color: inherit;
-    }
-
-    .logo h1 i {
-        margin-right: 10px;
-    }
-
-    nav {
-        display: flex;
-        gap: 20px;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: inherit;
-        font-weight: 500;
-    }
-
-    nav a:hover {
-        text-decoration: underline;
-    }
-
-    .active {
-        font-weight: bold;
-    }
-
-    /* Winkelmandje styling */
-    #winkelmandje {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        cursor: pointer;
-        padding: 8px 12px;
-        border-radius: 8px;
-        background-color: #026556;
-        color: white;
-    }
-
-    #winkelmandje:hover {
-        background-color: #034d40;
-    }
-
-    /* Winkelmandje popup styling */
-    #cart-popup {
-        display: none;
-    }
-
-    #cart-popup ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    #cart-popup button {
-        background: green;
-        color: white;
-        padding: 10px;
-        border-radius: 8px;
-        width: 100%;
-        cursor: pointer;
-        border: none;
-    }
-
-    #cart-popup button:hover {
-        background: darkgreen;
-    }
-</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

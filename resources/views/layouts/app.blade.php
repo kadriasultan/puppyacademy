@@ -9,18 +9,11 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
 <body>
-
 <!-- Loading Spinner -->
 <div id="loading-spinner" class="loading-spinner">
-    <div class="footprints-container">
-        <div class="footprint"></div>
-        <div class="footprint"></div>
-        <div class="footprint"></div>
-        <div class="footprint"></div>
-        <div class="footprint"></div>
-        <div class="footprint"></div>
-    </div>
+    <img src="images/paw.png" alt="Loading..." class="spinner-image">
 </div>
+
 
 @include('partials.header')
 
@@ -31,18 +24,17 @@
 @include('partials.footer')
 
 @stack('scripts')
-
+</body>
 <script>
-    // Hide the loading spinner after the page has fully loaded
     window.addEventListener('load', function () {
-        document.getElementById('loading-spinner').style.visibility = 'hidden';
-    });
-
-    // Optional: Show the spinner if the page is taking too long to load
-    window.addEventListener('beforeunload', function () {
-        document.getElementById('loading-spinner').style.visibility = 'visible';
+        const spinner = document.getElementById('loading-spinner');
+        spinner.style.transition = 'opacity 0.5s ease';
+        spinner.style.opacity = '0'; // fade-out na laden
+        setTimeout(() => {
+            spinner.style.display = 'none'; // verbergen na fade-out
+        }, 500); // tijd moet gelijk zijn aan transition (0.5s)
     });
 </script>
 
-</body>
+
 </html>
