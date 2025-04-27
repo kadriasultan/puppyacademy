@@ -13,8 +13,9 @@
     @endif
 
     <div class="contact-form-container">
-        <form action="{{ route('contact.store') }}" method="POST">
-            @csrf
+        <form action="{{ route('contact.send') }}" method="POST">
+
+        @csrf
             <div class="form-group">
                 <label for="name">Naam</label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror">
@@ -40,10 +41,5 @@
         </form>
     </div>
 
-    <div class="contact-info">
-        <h3>Contactgegevens</h3>
-        <p>Adres: Hondenstraat 123, 1234 AB Hondenstad</p>
-        <p>Telefoon: +31 6 12345678</p>
-        <p>E-mail: info@hondenopvang.nl</p>
-    </div>
+
 @endsection

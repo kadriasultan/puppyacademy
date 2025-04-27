@@ -42,7 +42,7 @@ Route::get('/training', [TrainingController::class, 'index'])->name('training');
 
 // ✅ Contact routes (GET en POST)
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
 // ✅ Home route (optioneel, naar je homepage)
 Route::get('/', function () {
@@ -53,3 +53,5 @@ Route::get('/payment', [ShopController::class, 'showPaymentPage'])->middleware('
 
 // Process payment route (POST)
 Route::post('/payment', [ShopController::class, 'processPayment'])->name('payment.process');
+
+

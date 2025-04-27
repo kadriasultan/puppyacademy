@@ -1,8 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Message;
+use App\Mail\NewMessageNotification;
+use App\Mail\ConfirmationEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -19,12 +22,21 @@ class ContactController extends Controller
             'message' => 'required|string|max:2000',
         ]);
 
-        // Here you would typically:
-        // 1. Save to database
-        // 2. Send email notification
-        // 3. Maybe send a confirmation email to the user
+        // 1. Opslaan van het bericht in de database
+        $message = Message::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'message' => $validated['message'],
+        ]);
 
-        // For now, we'll just return a success message
+        // 2. E-mail sturen naar de eigenaar
+        Mail::to('mgm@dr.com')->send(new NewMessageNotification($message));
+
+        // 3. Bevestiging sturen naar de gebruiker
+        Mail::to($validated['email'])->send(new ConfirmationEmail($message));
+
+
+        // 4. Redirect naar de vorige pagina met succes bericht
         return back()->with('success', 'Bedankt voor uw bericht! We nemen zo snel mogelijk contact met u op.');
     }
 }
