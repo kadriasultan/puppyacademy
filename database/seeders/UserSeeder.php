@@ -13,15 +13,14 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Maak admin account
+
         $admin = new User();
-        $admin->name = 'Admin User';
+        $admin->name = 'Admin';
         $admin->email = 'admin@example.com';
-        $admin->password = bcrypt('password'); // Gebruik altijd bcrypt()!
+        $admin->password = bcrypt('password');
         $admin->role = 'admin';
         $admin->save();
 
-        // Maak gewone gebruiker
         $user = new User();
         $user->name = 'Regular User';
         $user->email = 'user@example.com';

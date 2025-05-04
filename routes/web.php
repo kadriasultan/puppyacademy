@@ -18,6 +18,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
 
+Route::post('/shop', [ShopController::class, 'store'])->name('shop.store');
+Route::put('/shop/{id}', [ShopController::class, 'update'])->name('shop.update');
+Route::delete('/shop/{id}', [ShopController::class, 'destroy'])->name('shop.destroy');
+
+
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::middleware('auth')->group(function () {

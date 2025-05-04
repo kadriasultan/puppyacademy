@@ -39,6 +39,7 @@
                 <div class="form-group">
                     <label for="training">Kies je training</label>
                     <select id="training" name="training" required class="form-control">
+                        <option value="" disabled selected>Kies een training</option>
                         <option value="puppytraining">Puppytraining</option>
                         <option value="vuurwerkangst">Vuurwerkangst</option>
                         <option value="gedragstraining">Gedragstraining</option>

@@ -208,9 +208,11 @@ a {
 .product-card img {
     width: 100%;
     height: 200px;
+    max-height: 250px;
     object-fit: cover;
     border-radius: 10px;
 }
+
 
 .product-card button {
     margin-top: 1rem;
@@ -221,6 +223,160 @@ a {
     border-radius: 8px;
     cursor: pointer;
 }
+.product-card .btn-delete{
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    width: fit-content;
+    font-size: 11px;
+    justify-self: center;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+.product-card .btn-delete:hover{
+    background-color: #fa0422;
+
+}
+
+.shop-edit {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.shop-edit label {
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.shop-edit input[type="text"],
+.shop-edit input[type="number"],
+.shop-edit input[type="file"],
+.shop-edit textarea {
+    width: 98%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin: 1rem;
+    box-sizing: border-box;
+}
+
+.shop-edit textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.shop-edit button {
+    padding: 0.75rem;
+    background-color: #2b9e93;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.shop-edit button:hover {
+    background-color: #041e1b;
+}
+
+#show-add-form{
+    display: block;
+    background-color: #23867c;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    justify-self: center;
+    align-items: center;
+    font-size: 1rem;
+}
+#show-add-form:hover{
+    background-color: #041e1b;
+}
+.bestellen-button:hover {
+    background-color: #041e1b;
+
+}
+.edit-toggle:hover {
+    background-color: #459df3;
+}
+.shop-add {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.shop-add h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.shop-add form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-add label {
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.shop-add input[type="text"],
+.shop-add input[type="number"],
+.shop-add input[type="file"],
+.shop-add select,
+.shop-add textarea {
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.shop-add textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.shop-add button {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #28a394;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.shop-add button:hover {
+    background-color: #072e2a;
+}
+
 /* Training Platform Styles */
 .training-platform-page {
     max-width: 1200px;
@@ -419,7 +575,7 @@ a {
 }
 
 .btn-primary:hover {
-    background-color: #008080;
+    background-color: #0d2727;
 }
 
 /* Responsive aanpassingen */
@@ -520,10 +676,10 @@ footer {
 }
 
 .contact-form {
-    background-color: #fff; /* Witte achtergrond zoals product-card */
-    border-radius: 12px; /* Gelijk aan product-card */
+    background-color: #fff;
+    border-radius: 12px;
     padding: 2rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Zelfde als product-card */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
 }
 
@@ -567,7 +723,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #008080; /* Donkerder, zoals header */
+    background-color: #133e3e;
 }
 
 .contact-info {
@@ -587,11 +743,11 @@ button[type="submit"]:hover {
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem; /* Gelijk aan shop-container */
+    gap: 1.5rem;
 }
 
 .info-column {
-    background-color: #f9f9f9; /* Lichtgrijs zoals inhoud */
+    background-color: #f9f9f9;
     padding: 1.5rem;
     border-radius: 10px;
     text-align: center;
