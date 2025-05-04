@@ -86,7 +86,7 @@
         </section>
 
         @if ($isAdmin)
-            <button id="show-add-form" onclick="toggleAddForm()">Voeg een nieuwe cursus of pakket toe</button>
+            <button id="show-add-form" onclick="toggleAddForm()">Voeg een nieuw item toe</button>
 
             <section class="shop-add" id="add-form" style="display:none;">
                 <h3>Nieuw item toevoegen</h3>
