@@ -1,43 +1,50 @@
 <header>
     <div class="logo">
-        <h1 class="logo"><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
+        <h1><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
         @if (Auth::check())
-            <a> Welkom {{ Auth::user()->name }}! </a>
-
-        @else
+            <a>Welkom {{ Auth::user()->name }}!</a>
         @endif
     </div>
 
-    <nav>
+    <!-- Burgerknop -->
+    <button class="burger" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Navigatie -->
+    <nav id="main-nav" class="hidden">
         <a href="/">Home</a>
         <a href="/shop" class="active">Shop</a>
         <a href="/training">Training</a>
         <a href="/dagopvang">Dagopvang</a>
         <a href="/contact">Contact</a>
+
         @if (!Auth::check())
-        <a href="/login">Inloggen</a>
-        <a href="/register">Register</a>
+            <a href="/login">Inloggen</a>
+            <a href="/register">Register</a>
         @else
-                <a href="/profile">
-                    {{ __('Profile') }}
+            <a href="/profile">{{ __('Profile') }}</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a href="/logout" onclick="event.preventDefault(); this.closest('form').submit();">
+                    {{ __('Log Out') }}
                 </a>
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <a href="/logout"
-                                           onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </a>
-                </form>
-
+            </form>
         @endif
-        <!-- Winkelmandje in de navigatie -->
-        <div id="winkelmandje" >
+
+        <div id="winkelmandje">
             <i class="fa-solid fa-cart-shopping"></i>
             <span id="cart-count">0</span>
         </div>
     </nav>
 </header>
+<script>
+    function toggleMenu() {
+        const nav = document.getElementById('main-nav');
+        nav.classList.toggle('show');
+    }
+</script>
+
 
 <!-- Winkelmandje -->
 <div id="cart-popup">
