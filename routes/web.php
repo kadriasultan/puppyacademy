@@ -22,6 +22,10 @@ Route::post('/shop', [ShopController::class, 'store'])->name('shop.store');
 Route::put('/shop/{id}', [ShopController::class, 'update'])->name('shop.update');
 Route::delete('/shop/{id}', [ShopController::class, 'destroy'])->name('shop.destroy');
 
+Route::post('/training', [TrainingController::class, 'store'])->name('training.store');
+Route::put('/training/{id}', [TrainingController::class, 'update'])->name('training.update');
+Route::delete('/training/{id}', [TrainingController::class, 'destroy'])->name('training.destroy');
+
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 

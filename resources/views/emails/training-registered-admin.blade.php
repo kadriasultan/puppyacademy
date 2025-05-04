@@ -5,8 +5,9 @@
     <title>Nieuwe registratie voor training</title>
 </head>
 <body>
-<h1>Nieuwe training registratie</h1>
-<p>Er is een nieuwe inschrijving voor de training: <h3>{{ ucfirst($training) }}.</h3></p>
+<h3>Nieuwe training registratie</h3>
+<p>Er is een nieuwe inschrijving voor de training:</p>
+<h3>{{ ucfirst($training) }}. </h3>
 <p>Details van de deelnemer:</p>
 <ul>
     <li>Naam: {{ $name }}</li>

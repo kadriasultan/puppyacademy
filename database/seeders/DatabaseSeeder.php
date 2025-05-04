@@ -22,5 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ShopSeeder::class,
         ]);
+        $this->call([
+            TrainingenSeeder::class,
+        ]);
     }
 }
