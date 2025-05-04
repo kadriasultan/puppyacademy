@@ -118,15 +118,5 @@
     </main>
 
 
-    <script>
-        function toggleEditForm(id) {
-            const form = document.getElementById(`edit-form-${id}`);
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function toggleAddForm() {
-            const form = document.getElementById('add-form');
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        }
-    </script>
+    <script src="{{ asset('js/script.js') }}"></script>
 @endsection

@@ -26,7 +26,7 @@
 
                     @if ($isAdmin)
                         <button class="edit-toggle" onclick="toggleEditForm({{ $course->id }})">Bewerken</button>
-                        <form action="{{ route('training.destroy', $course->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je dit item wilt verwijderen?');">
+                        <form action="{{ route('training.destroy', $course->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze training wilt verwijderen?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-delete">Verwijderen</button>
@@ -73,7 +73,7 @@
                         <button class="edit-toggle" onclick="toggleEditForm({{ $video->id }})">Bewerken</button>
 
                         {{-- Verwijderknop --}}
-                        <form action="{{ route('training.destroy', $video->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je dit item wilt verwijderen?');">
+                        <form action="{{ route('training.destroy', $video->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze video wilt verwijderen?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-delete">Verwijderen</button>
@@ -166,58 +166,6 @@
             </form>
         </section>
     @endif
-
-        <script>
-            function toggleEditForm(id) {
-                const form = document.getElementById(`edit-form-${id}`);
-                form.style.display = form.style.display === 'none' ? 'block' : 'none';
-            }
-
-            function toggleAddForm() {
-                const form = document.getElementById('add-form');
-                form.style.display = form.style.display === 'none' ? 'block' : 'none';
-            }
-        </script>
-    <script>
-        // Get references to the type select and the price and video containers
-        const typeSelect = document.getElementById('type');
-        const imageContainer = document.getElementById('image-container');
-        const videoContainer = document.getElementById('video-container');
-
-        // Function to toggle the form fields based on the selected type
-        typeSelect.addEventListener('change', function () {
-            if (this.value === 'video') {
-
-                imageContainer.style.display = 'none';
-                videoContainer.style.display = 'block';
-            } else if (this.value === 'course') {
-
-                imageContainer.style.display = 'block';
-                videoContainer.style.display = 'none';
-            }
-        });
-
-        // Initialize the form to set the correct visibility when the page loads
-        if (typeSelect.value === 'video') {
-            videoContainer.style.display = 'block';
-        } else {
-            videoContainer.style.display = 'none';
-        }
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const videos = document.querySelectorAll('video');
-
-            videos.forEach(video => {
-                video.addEventListener('play', () => {
-                    videos.forEach(otherVideo => {
-                        if (otherVideo !== video) {
-                            otherVideo.pause();
-                        }
-                    });
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
 @endsection
