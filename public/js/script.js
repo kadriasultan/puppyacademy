@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Maak deze functies beschikbaar in de global scope
+
     window.toggleEditForm = toggleEditForm;
     window.toggleAddForm = toggleAddForm;
 
