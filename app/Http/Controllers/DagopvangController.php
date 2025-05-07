@@ -27,5 +27,6 @@ class DagopvangController extends Controller
         return view('dagopvang');
     }
 
+
 }
 

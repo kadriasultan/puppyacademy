@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <section class="hero">
         <h2>Dagopvang voor Honden</h2>
         <p>Een veilige, speelse en liefdevolle plek voor je hond wanneer jij er even niet kunt zijn.</p>
@@ -44,6 +45,11 @@
 
         <div class="inschrijf-formulier">
             <h4>Inschrijven voor de dagopvang</h4>
+            <div class="voorkeursdag-selectie">
+                <label for="voorkeursdatum"><strong>Kies een voorkeursdatum voor dagopvang:</strong></label><br>
+                <input type="date" id="voorkeursdatum" name="voorkeursdag" required>
+                <small style="color: gray;">Let op: alleen maandag, dinsdag of donderdag is mogelijk.</small>
+            </div><br>
 
             @if(session('success'))
                 <p style="color: green;">{{ session('success') }}</p>
@@ -64,6 +70,22 @@
         </div>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('voorkeursdatum');
+
+            dateInput.addEventListener('input', function () {
+                const selectedDate = new Date(this.value);
+                const day = selectedDate.getDay(); // 0=zo, 1=ma, ..., 6=za
+
+                // Toegestane dagen: maandag (1), dinsdag (2), donderdag (4)
+                if (![1, 2, 4].includes(day)) {
+                    alert('Kies een maandag, dinsdag of donderdag.');
+                    this.value = '';
+                }
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
