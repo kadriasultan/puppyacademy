@@ -10,13 +10,13 @@ use App\Http\Controllers\DagopvangController;
 
 
 
-
 Route::get('/dashboard', function () {
     if (auth()->user()->role !== 'admin') {
-        abort(403);
+        return redirect('/');
     }
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
+
 
 Route::post('/shop', [ShopController::class, 'store'])->name('shop.store');
 Route::put('/shop/{id}', [ShopController::class, 'update'])->name('shop.update');
