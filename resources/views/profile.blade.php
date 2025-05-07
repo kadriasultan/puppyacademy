@@ -11,8 +11,9 @@
         <a href="{{ route('profile.edit') }}" class="btn-primary">Edit Profile</a>
 
         <!-- Delete Account Form -->
-        <form action="{{ route('profile.destroy', $user->id) }}" method="POST">
-            @csrf
+        <form action="{{ route('profile.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
+
+        @csrf
             @method('DELETE')
 
             @if (auth()->id() === $user->id)
