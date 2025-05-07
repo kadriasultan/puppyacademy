@@ -46,21 +46,32 @@ class ProfileController extends Controller
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request, $id): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        $user = \App\Models\User::findOrFail($id);
 
-        $user = $request->user();
+        // Alleen eigenaar of admin mag verwijderen
+        if (Auth::id() !== $user->id && Auth::user()->role !== 'admin') {
+            abort(403);
+        }
 
-        Auth::logout();
+        if (Auth::id() === $user->id) {
+            $request->validateWithBag('userDeletion', [
+                'password' => ['required', 'current_password'],
+            ]);
 
-        $user->delete();
+            Auth::logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            $user->delete();
 
-        return Redirect::to('/');
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return Redirect::to('/');
+        } else {
+            $user->delete();
+            return Redirect::route('dashboard')->with('status', 'user-deleted');
+        }
     }
+
 }

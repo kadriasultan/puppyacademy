@@ -11,10 +11,16 @@
         <a href="{{ route('profile.edit') }}" class="btn-primary">Edit Profile</a>
 
         <!-- Delete Account Form -->
-        <form method="POST" action="{{ route('profile.destroy') }}" onsubmit="return confirm('Are you sure you want to delete your account?');">
+        <form action="{{ route('profile.destroy', $user->id) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn-danger">Delete Account</button>
+
+            @if (auth()->id() === $user->id)
+                <input type="password" name="password" required placeholder="Confirm password">
+            @endif
+
+            <button type="submit">Delete Account</button>
         </form>
+
     </div>
 @endsection
