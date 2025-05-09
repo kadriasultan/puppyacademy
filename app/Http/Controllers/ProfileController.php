@@ -26,7 +26,11 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
-
+    public function show()
+    {
+        $user = auth()->user()->load('dogs');
+        return view('profile.show', compact('user'));
+    }
     /**
      * Update the user's profile information.
      */

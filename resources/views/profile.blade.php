@@ -4,24 +4,35 @@
     <div class="profile-container">
         <h1>Your Profile</h1>
 
-        <p><strong>Name:</strong> {{ $user->name }}</p>
-        <p><strong>Email:</strong> {{ $user->email }}</p>
+        <div class="user-info">
+            <h2>Personal Information</h2>
+            <p><strong>Name:</strong> {{ $user->name }}</p>
+            <p><strong>Email:</strong> {{ $user->email }}</p>
+        </div>
 
-        <!-- Edit Profile Button -->
-        <a href="{{ route('profile.edit') }}" class="btn-primary">Edit Profile</a>
+        <div class="dogs-info">
+            <h2>Your Dogs</h2>
+            @foreach($user->dogs as $dog)
+                <div class="dog-card">
+                    <h3>{{ $dog->name }}</h3>
+                    <p><strong>Roepnaam hond:</strong> {{ $dog->nickname }}</p>
+                    <p><strong>Hondenras:</strong> {{ $dog->breed }}</p>
+                    <p><strong>leeftijd:</strong> {{ $dog->age }} years</p>
+                </div>
+            @endforeach
+        </div>
 
-        <!-- Delete Account Form -->
-        <form action="{{ route('profile.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete your account?');">
+        <div class="profile-actions">
+            <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
 
-        @csrf
-            @method('DELETE')
-
-            @if (auth()->id() === $user->id)
-                <input type="password" name="password" required placeholder="Confirm password">
-            @endif
-
-            <button type="submit">Delete Account</button>
-        </form>
-
+            <form action="{{ route('profile.destroy', $user->id) }}" method="POST"
+                  onsubmit="return confirm('Are you sure you want to delete your account?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Delete Account</button>
+            </form>
+        </div>
     </div>
+
+
 @endsection

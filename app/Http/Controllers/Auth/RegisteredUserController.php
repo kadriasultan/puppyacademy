@@ -44,6 +44,15 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        foreach ($request->dog_name as $index => $dogName) {
+            \App\Models\Dog::create([
+                'user_id' => $user->id,
+                'name' => $dogName,
+                'nickname' => $request->dog_roepnaam[$index],
+                'breed' => $request->dog_soort[$index],
+                'age' => $request->dog_age[$index],
+            ]);
+        }
 
         return redirect(route('welcome', absolute: false));
     }
