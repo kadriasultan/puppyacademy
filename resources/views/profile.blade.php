@@ -14,14 +14,18 @@
             <h2>Your Dogs</h2>
             @foreach($user->dogs as $dog)
                 <div class="dog-card">
-                    <h3>{{ $dog->name }}</h3>
+                    <p><strong>Naam:</strong>{{ $dog->name }}</p>
                     <p><strong>Roepnaam hond:</strong> {{ $dog->nickname }}</p>
                     <p><strong>Hondenras:</strong> {{ $dog->breed }}</p>
                     <p><strong>leeftijd:</strong> {{ $dog->age }} years</p>
                 </div>
             @endforeach
         </div>
-
+        @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="profile-actions">
             <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
 
@@ -29,7 +33,7 @@
                   onsubmit="return confirm('Are you sure you want to delete your account?');">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete Account</button>
+
             </form>
         </div>
     </div>
