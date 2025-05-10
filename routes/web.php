@@ -1,64 +1,86 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\TrainingController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DagopvangController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\{
+    ProfileController,
+    ShopController,
+    TrainingController,
+    ContactController,
+    HomeController,
+    DagopvangController,
+    Auth\RegisterController,
+    DogController
+};
 
 // Public routes
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
-Route::get('/dagopvang', [DagopvangController::class, 'index'])->name('dagopvang');
-Route::get('/shop', [ShopController::class, 'index'])->name('shop');
-Route::get('/training', [TrainingController::class, 'index'])->name('training');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('welcome');
+});
+
+Route::controller(DagopvangController::class)->group(function () {
+    Route::get('/dagopvang', 'index')->name('dagopvang');
+});
+
+Route::controller(ShopController::class)->group(function () {
+    Route::get('/shop', 'index')->name('shop');
+});
+
+Route::controller(TrainingController::class)->group(function () {
+    Route::get('/training', 'index')->name('training');
+});
+
+Route::controller(ContactController::class)->group(function () {
+    Route::get('/contact', 'index')->name('contact');
+    Route::post('/contact', 'send')->name('contact.send');
+});
 
 // Registration routes
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::controller(RegisterController::class)->group(function () {
+    Route::get('/register', 'showRegistrationForm')->name('register');
+    Route::post('/register', 'register');
+});
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     // Profile routes
-    Route::prefix('profile')->group(function () {
-        Route::get('/', [ProfileController::class, 'index'])->name('profile');
-        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
-        Route::get('/{userId}', [ProfileController::class, 'showProfile']);
+    Route::controller(ProfileController::class)->prefix('profile')->group(function () {
+        Route::get('/', 'index')->name('profile');
+        Route::get('/edit', 'edit')->name('profile.edit');
+        Route::patch('/', 'update')->name('profile.update');
+        Route::delete('/{id}', 'destroy')->name('profile.destroy');
+        Route::get('/{userId}', 'showProfile');
     });
 
     // Dogs resource
-    Route::resource('dogs', DogController::class);
+    Route::resource('dogs', DogController::class)->except(['show']); // Exclude show if not needed
 
     // Shop routes
-    Route::post('/shop', [ShopController::class, 'store'])->name('shop.store');
-    Route::put('/shop/{id}', [ShopController::class, 'update'])->name('shop.update');
-    Route::delete('/shop/{id}', [ShopController::class, 'destroy'])->name('shop.destroy');
+    Route::controller(ShopController::class)->prefix('shop')->group(function () {
+        Route::post('/', 'store')->name('shop.store');
+        Route::put('/{id}', 'update')->name('shop.update');
+        Route::delete('/{id}', 'destroy')->name('shop.destroy');
+    });
 
     // Training routes
-    Route::post('/training', [TrainingController::class, 'store'])->name('training.store');
-    Route::put('/training/{id}', [TrainingController::class, 'update'])->name('training.update');
-    Route::delete('/training/{id}', [TrainingController::class, 'destroy'])->name('training.destroy');
-    Route::post('/training/register', [TrainingController::class, 'register'])->name('training.register');
+    Route::controller(TrainingController::class)->prefix('training')->group(function () {
+        Route::post('/', 'store')->name('training.store');
+        Route::put('/{id}', 'update')->name('training.update');
+        Route::delete('/{id}', 'destroy')->name('training.destroy');
+        Route::post('/register', 'register')->name('training.register');
+    });
 
     // Dagopvang
     Route::post('/dagopvang', [DagopvangController::class, 'store'])->name('dagopvang.store');
 
     // Payment routes
-    Route::get('/payment', [ShopController::class, 'showPaymentPage'])->name('payment');
-    Route::post('/payment', [ShopController::class, 'processPayment'])->name('payment.process');
+    Route::controller(ShopController::class)->prefix('payment')->group(function () {
+        Route::get('/', 'showPaymentPage')->name('payment');
+        Route::post('/', 'processPayment')->name('payment.process');
+    });
 
     // Admin dashboard
     Route::get('/dashboard', function () {
-        if (auth()->user()->role !== 'admin') {
-            return redirect('/');
-        }
-        return view('dashboard');
+        return auth()->user()->role !== 'admin' ? redirect('/') : view('dashboard');
     })->name('dashboard');
 });
 
