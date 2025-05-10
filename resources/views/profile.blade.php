@@ -3,9 +3,11 @@
 @section('content')
     <div class="profile-container">
         <h1>Your Profile</h1>
+<div class="in">
+    <h2>Personal Information</h2>
 
+</div>
         <div class="user-info">
-            <h2>Personal Information</h2>
             <p><strong>Name:</strong> {{ $user->name }}</p>
             <p><strong>Email:</strong> {{ $user->email }}</p>
         </div>

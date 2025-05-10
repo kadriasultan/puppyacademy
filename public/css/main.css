@@ -1317,6 +1317,8 @@ nav a:hover {
     padding: 20px;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -1324,6 +1326,7 @@ nav a:hover {
 .profile-container h1 {
     text-align: center;
     color: #070707;
+
 }
 
 .user-info, .dogs-info {
@@ -1332,11 +1335,24 @@ nav a:hover {
 
 .user-info h2, .dogs-info h2 {
     color: #070707;
+    text-align: center;
+
 }
 
+.user-info{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: rgba(251, 250, 250, 0.71);
+
+
+}
+.in{
+    text-align: center;
+}
 .user-info p, .dogs-info p {
     font-size: 1rem;
     color: #070707;
+
 }
 
 .dog-card {
