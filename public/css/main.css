@@ -32,6 +32,10 @@ header {
     z-index: 100;
     color: #ffffff;
 }
+.burger i {
+    color: white !important;
+}
+
 .burger {
     display: none;
     background: none;
@@ -58,6 +62,11 @@ header {
         display: flex;
         color: black;
     }
+}
+.S {
+    color: white;
+    font-weight: normal;
+    background-color: transparent;
 }
 
 
@@ -639,7 +648,6 @@ a {
 
 .footer-icon {
     font-size: 30px;
-    color: #2a9d8f;
     margin-bottom: 10px;
 }
 

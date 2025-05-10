@@ -14,7 +14,7 @@
     <!-- Navigatie -->
     <nav id="main-nav" class="hidden">
         <a href="/">Home</a>
-        <a href="/shop" class="active">Shop</a>
+        <a class="S" href="/shop" class="active">Shop</a>
         <a href="/training">Training</a>
         <a href="/dagopvang">Dagopvang</a>
         <a href="/contact">Contact</a>
@@ -38,6 +38,7 @@
         </div>
     </nav>
 </header>
+
 <script>
     function toggleMenu() {
         const nav = document.getElementById('main-nav');
