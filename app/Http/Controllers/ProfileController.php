@@ -23,30 +23,52 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $request->user()->load('dogs')
         ]);
     }
-    public function show()
-    {
-        $user = auth()->user()->load('dogs');
-        return view('profile.show', compact('user'));
-    }
-    /**
-     * Update the user's profile information.
-     */
+
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->has('dogs')) {
+            $dogIds = [];
+
+            foreach ($request->dogs as $dogData) {
+                if (!empty($dogData['id'])) {
+                    $dog = $user->dogs()->updateOrCreate(
+                        ['id' => $dogData['id']],
+                        [
+                            'name' => $dogData['name'],
+                            'nickname' => $dogData['nickname'],
+                            'breed' => $dogData['breed'],
+                            'age' => $dogData['age']
+                        ]
+                    );
+                    $dogIds[] = $dog->id;
+                }
+            }
+
+            $user->dogs()->whereNotIn('id', $dogIds)->delete();
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile')->with('success', 'Profiel bijgewerkt!');
     }
 
+    public function destroyDog(Dog $dog)
+    {
+        if ($dog->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $dog->delete();
+
+        return response()->json(['success' => true]);
+    }
     /**
      * Delete the user's account.
      */
