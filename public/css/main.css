@@ -617,54 +617,56 @@ a {
         grid-template-columns: 1fr;
     }
 }
-
-footer {
-    background-color: #264653;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    margin-top: auto; /* Zorgt ervoor dat de footer naar beneden wordt geduwd */
-    position: relative;
-}
-/* Footer Container */
 .footer {
     background-color: #f8f9fa;
-    padding: 40px 20px;
     color: #343a40;
+    padding: 40px 20px 0 20px;
+    text-align: center;
 }
 
 .footer-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Individual Footer Item */
 .footer-item {
-    flex: 1 1 30%; /* Each item takes 30% width, adjust as necessary */
+    flex: 1 1 45%;
     padding: 10px;
-    text-align: center;
 }
 
 .footer-icon {
-    font-size: 40px;
-    color: #007bff; /* Change color as needed */
+    font-size: 30px;
+    color: #2a9d8f;
     margin-bottom: 10px;
 }
 
-/* Footer Heading */
-.footer-item h3 {
+.footer-item h3,
+.footer-location h3 {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
-/* Footer Paragraph */
-.footer-item p {
+.footer-item p,
+.footer-location p {
     font-size: 14px;
     line-height: 1.5;
+}
+
+.footer-location {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #e9ecef;
+}
+
+.footer-bottom {
+    padding: 20px;
+    background-color: #264653;
+    color: white;
+    margin-top: 0;
 }
 
 /* Responsive Design */
