@@ -45,11 +45,7 @@
 
         <div class="inschrijf-formulier">
             <h4>Inschrijven voor de dagopvang</h4>
-            <div class="voorkeursdag-selectie">
-                <label for="voorkeursdatum"><strong>Kies een voorkeursdatum voor dagopvang:</strong></label><br>
-                <input type="date" id="voorkeursdatum" name="voorkeursdag" required>
-                <small style="color: gray;">Let op: alleen maandag, dinsdag of donderdag is mogelijk.</small>
-            </div><br>
+
 
             @if(session('success'))
                 <p style="color: green;">{{ session('success') }}</p>
@@ -57,19 +53,86 @@
 
             <form action="{{ route('dagopvang.store') }}" method="POST">
                 @csrf
-                <label>Naam: <input type="text" name="naam" required></label><br>
-                <label>Adres: <input type="text" name="adres" required></label><br>
-                <label>Woonplaats: <input type="text" name="woonplaats" required></label><br>
-                <label>Soort hond: <input type="text" name="soort_hond" required></label><br>
-                <label>Naam van de hond: <input type="text" name="naam_hond" required></label><br>
-                <label>Roepnaam: <input type="text" name="roepnaam" required></label><br>
-                <label>Telefoonnummer: <input type="text" name="telefoon" required></label><br>
-                <label>E-mailadres: <input type="email" name="email" required></label><br>
+                <div class="voorkeursdag-selectie">
+                    <label for="voorkeursdatum">Kies een voorkeursdatum voor dagopvang:</label><br>
+                    <input type="date" id="voorkeursdatum" name="voorkeursdatum" required>
+                    <small style="color: gray;">Let op: alleen maandag, dinsdag of donderdag is mogelijk.</small>
+                </div><br>
+                <b2 for="eigenaar">Eigenaar Gegevens:</b2>
+                {{-- Automatisch ingevulde gegevens als ingelogd --}}
+                <label>Naam:
+                    <input type="text" name="naam" value="{{ old('naam', optional($user)->name) }}" required>
+                </label><br>
+
+                <label>E-mailadres:
+                    <input type="email" name="email" value="{{ old('email', optional($user)->email) }}" required>
+                </label><br>
+                <label>Telefoonnummer:
+                    <input type="text" name="telefoon" value="{{ old('telefoon', optional($user)->phone) }}" required>
+                </label><br>
+                {{-- Alleen als gebruiker honden heeft --}}
+                @if($dogs->count())
+                    <label for="dog_select">Hond Gegevens:</label>
+                    <select id="dog_select" name="dog_id">
+                        <option value="">-- Selecteer een hond --</option>
+                        @foreach($dogs as $dog)
+                            <option value="{{ $dog->id }}"
+                                    data-breed="{{ $dog->breed }}"
+                                    data-name="{{ $dog->name }}"
+                                    data-nickname="{{ $dog->nickname }}"
+                                    age="{{ $dog->age }}">
+                                {{ $dog->name }} ({{ $dog->breed }})
+
+                            </option>
+                        @endforeach
+                    </select><br>
+                @endif
+
+                {{-- Altijd zichtbaar, eventueel automatisch ingevuld --}}
+                <label>Soort hond:
+                    <input type="text" id="soort_hond" name="soort_hond" value="{{ old('soort_hond') }}" required>
+                </label><br>
+                <label>Naam van de hond:
+                    <input type="text" id="naam_hond" name="naam_hond" value="{{ old('naam_hond') }}" required>
+                </label><br>
+                <label>Roepnaam:
+                    <input type="text" id="roepnaam" name="roepnaam" value="{{ old('roepnaam') }}" required>
+                </label><br>
+                <div class="form-group">
+                    <label for="age">Leeftijd</label>
+                    <input type="number" class="form-control" id="age" name="age" value="{{ old('age') }}" required min="1">
+                </div>
+
+                <label>Adres en postcode:
+                    <input type="text" name="adres" value="{{ old('adres') }}" required>
+                </label><br>
+
+                <label>Woonplaats:
+                    <input type="text" name="woonplaats" value="{{ old('woonplaats') }}" required>
+                </label><br>
+
+
                 <button type="submit">Inschrijven</button>
             </form>
+
         </div>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dogSelect = document.getElementById('dog_select');
+            if (dogSelect) {
+                dogSelect.addEventListener('change', function () {
+                    const selected = this.options[this.selectedIndex];
+                    document.getElementById('soort_hond').value = selected.dataset.breed || '';
+                    document.getElementById('naam_hond').value = selected.dataset.name || '';
+                    document.getElementById('roepnaam').value = selected.dataset.nickname || '';
+                    document.getElementById('age').value = selected.getAttribute('age') || '';
+                });
+            }
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const dateInput = document.getElementById('voorkeursdatum');

@@ -38,6 +38,17 @@
 
             </form>
         </div>
+        <h3>Mijn Dagopvang Reserveringen</h3>
+        <ul>
+            @forelse($inschrijvingen as $inschrijving)
+                <li>
+                    <strong>{{ $inschrijving->voorkeursdatum }}</strong> - {{ $inschrijving->naam_hond }} ({{ $inschrijving->roepnaam }})
+                </li>
+            @empty
+                <li>Je hebt nog geen dagopvang reserveringen.</li>
+            @endforelse
+        </ul>
+
     </div>
 
 

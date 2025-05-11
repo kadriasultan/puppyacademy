@@ -3,10 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Dagopvang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function manageDagopvang()
+    {
+        if (Auth::user()->role !== 'admin') {
+            return redirect('/');
+        }
+
+        $dagopvangs = Dagopvang::with('user')
+            ->orderBy('voorkeursdatum', 'asc')
+            ->get()
+            ->groupBy('voorkeursdatum');
+
+
+        // Get all dagopvang records and group them by voorkeursdatum
+        $dagopvangs = Dagopvang::select('voorkeursdatum', 'naam', 'adres', 'woonplaats', 'soort_hond', 'naam_hond', 'roepnaam', 'telefoon', 'email', 'user_id', 'dog_id')
+            ->orderBy('voorkeursdatum', 'asc')
+            ->get()
+            ->groupBy('voorkeursdatum');  // Group by voorkeursdatum
+
+        return view('admin.manage-dagopvang', compact('dagopvangs'));
+    }
+
     public function index()
     {
         return view('admin.dashboard'); // Dashboard view voor admin

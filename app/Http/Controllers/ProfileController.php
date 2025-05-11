@@ -8,18 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Dagopvang;
+
+
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
-    public function index(Request $request): View
+    public function index()
     {
-        return view('profile', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+        $inschrijvingen = Dagopvang::where('user_id', $user->id)->latest()->get();
+
+        return view('profile', compact('user', 'inschrijvingen'));
     }
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [

@@ -44,6 +44,63 @@ header {
     cursor: pointer;
 }
 
+/* Table container */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Header styling */
+.table th {
+    background-color: #f8f9fa; /* Light header background */
+    color: #343a40; /* Dark text */
+    padding: 12px;
+    text-align: center;
+}
+
+/* Row striped effect */
+.table tbody tr:nth-child(odd) {
+    background-color: #f1f3f5; /* Light gray for odd rows */
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #e9ecef; /* Slightly darker gray for even rows */
+}
+
+/* Column styling: alternating background color for first column */
+.table td:first-child {
+    background-color: #e9ecef; /* Light gray for the first column */
+}
+
+/* Text color for table data */
+.table td {
+    padding: 12px;
+    text-align: center;
+    color: #343a40; /* Dark text */
+}
+
+/* Hover effect for rows */
+.table tbody tr:hover {
+    background-color: #d6d8db; /* Hover effect for rows */
+}
+
+/* Table borders */
+.table th, .table td {
+    border: 1px solid #dee2e6;
+}
+
+/* Ensure table responsiveness */
+.table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
 /* Mobiel */
 @media (max-width: 768px) {
     .burger {

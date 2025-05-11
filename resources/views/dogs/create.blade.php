@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label for="age">Age</label>
-                <input type="number" class="form-control" id="age" name="age" required min="0">
+                <input type="number" class="form-control" id="age" name="age" required min="1">
             </div>
             <button type="submit" class="btn btn-primary">Save Dog</button>
             <a href="{{ route('profile.show') }}" class="btn btn-secondary">Cancel</a>
