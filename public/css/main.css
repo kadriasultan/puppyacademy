@@ -1212,6 +1212,9 @@ header {
     align-items: center;
     color: inherit;
 }
+.active{
+    color: black;
+}
 
 .logo h1 i {
     margin-right: 10px;
