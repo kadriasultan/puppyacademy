@@ -39,12 +39,6 @@
     </nav>
 </header>
 
-<script>
-    function toggleMenu() {
-        const nav = document.getElementById('main-nav');
-        nav.classList.toggle('show');
-    }
-</script>
 
 
 <!-- Winkelmandje -->
@@ -130,6 +124,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const buttons = document.querySelectorAll('.bestellen-button');
         const cartItems = document.getElementById('cart-items');
+        const cartpopup = document.getElementById('cart-popup');
         const cartCount = document.getElementById('cart-count');
         const winkelmandje = document.getElementById('winkelmandje');
         const totalPriceElement = document.getElementById('total-price');
@@ -170,6 +165,14 @@
             }
         }
 
+        document.addEventListener('click', function (event) {
+            const isClickInside = winkelmandje.contains(event.target) || cartItems.contains(event.target);
+            if (!isClickInside) {
+                cartpopup.style.display = 'none';
+            }
+        });
+
+
         buttons.forEach(button => {
             button.addEventListener('click', function (e) {
                 e.stopPropagation();
@@ -192,9 +195,6 @@
                     checkoutButton.style.display = 'block';
                 }
             } else {
-                cartItems.style.display = 'none';
-                totalPriceElement.style.display = 'none';
-                checkoutButton.style.display = 'none';
             }
         });
 

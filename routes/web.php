@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 use App\Http\Controllers\{
     ProfileController,
     ShopController,
@@ -9,8 +11,14 @@ use App\Http\Controllers\{
     HomeController,
     DagopvangController,
     Auth\RegisterController,
-    DogController
+    DogController,
+    AdminController
 };
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/admin/dagopvang', [AdminController::class, 'manageDagopvang'])->name('admin.manageDagopvang');
+});
 
 // Public routes
 Route::controller(HomeController::class)->group(function () {
@@ -80,7 +88,7 @@ Route::middleware('auth')->group(function () {
 
     // Admin dashboard
     Route::get('/dashboard', function () {
-        return auth()->user()->role !== 'admin' ? redirect('/') : view('dashboard');
+        return auth()->user()->role !== 'admin' ? redirect('/') : view('admin.dashboard');
     })->name('dashboard');
 });
 
