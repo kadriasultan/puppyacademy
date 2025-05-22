@@ -15,7 +15,6 @@
 <section class="hero">
     <h2>Welkom bij Puppy Power Academy!</h2>
     <p>Dé plek voor puppytrainingen, hondenspullen en professionele dagopvang.</p>
-    <a href="/shop">Bekijk onze Shop</a>
 </section>
 <div class="gallery">
     <div class="slides">

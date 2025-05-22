@@ -2,7 +2,7 @@
     <div class="footer-container">
         <!-- Contactgegevens -->
         <div class="footer-item">
-            <div class="footer-icon">
+            <div class="footer-icon" id="c">
                 <i class="fas fa-phone-alt"></i>
             </div>
             <h3>Contactgegevens</h3>
@@ -12,7 +12,7 @@
 
         <!-- Openingstijden -->
         <div class="footer-item">
-            <div class="footer-icon">
+            <div class="footer-icon" id="c">
                 <i class="fas fa-clock"></i>
             </div>
             <h3>Openingstijden</h3>
@@ -22,9 +22,9 @@
         </div>
     </div>
 
-    <!-- Locatie onderaan -->
-    <div class="footer-location">
-        <div class="footer-icon">
+    <!-- Locatie -->
+    <div class="footer-location" >
+        <div class="footer-icon" id="c">
             <i class="fas fa-map-marker-alt"></i>
         </div>
         <h3>Locatie</h3>

@@ -6,22 +6,20 @@
         @endif
     </div>
 
-    <!-- Burgerknop -->
     <button class="burger" onclick="toggleMenu()">
         <i class="fa-solid fa-bars"></i>
     </button>
 
-    <!-- Navigatie -->
-    <nav id="main-nav" class="hidden">
-        <a href="/">Home</a>
-        <a  href="/shop" >Shop</a>
-        <a href="/training">Training</a>
-        <a href="/dagopvang">Dagopvang</a>
-        <a href="/contact">Contact</a>
+    <nav id="main-nav" >
+        <a href="/" class="auth-btn">Home</a>
+        <a href="/shop" class="auth-btn">Shop</a>
+        <a href="/training" class="auth-btn">Training</a>
+        <a href="/dagopvang" class="auth-btn">Dagopvang</a>
+        <a href="/contact" class="auth-btn">Contact</a>
 
         @if (!Auth::check())
-            <a href="/login">Inloggen</a>
-            <a href="/register">Register</a>
+            <a href="/login" class="auth-btn">Inloggen</a>
+            <a href="/register" class="auth-btn">Register</a>
         @else
             <a href="/profile">{{ __('Profile') }}</a>
             <form method="POST" action="{{ route('logout') }}">
@@ -38,6 +36,36 @@
         </div>
     </nav>
 </header>
+<style>
+    nav a {
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        nav.show a {
+            color: black;
+        }
+    }
+
+</style>
+
+<script>
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('nav');
+
+    burger.addEventListener('click', () => {
+        nav.classList.toggle('show');
+    });
+
+    document.addEventListener('click', (event) => {
+        const isClickInside = nav.contains(event.target) || burger.contains(event.target);
+        if (!isClickInside) {
+            nav.classList.remove('show');
+        }
+    });
+</script>
+
+
 
 
 
@@ -100,7 +128,7 @@
             }
         }
 
-        // Winkelmandje knop in menu
+        // Winkelmandje in menu
         cartButton.addEventListener('click', function () {
             if (cartPopup.style.display === 'none' || cartPopup.style.display === '') {
                 cartPopup.style.display = 'block';
@@ -112,7 +140,7 @@
 
         // Checkout knop
         checkoutButton.addEventListener('click', function () {
-            window.location.href = '{{ route("payment") }}'; // Redirect naar betaalpagina
+            window.location.href = '{{ route("payment") }}';
         });
 
         // Init winkelmandje bij pagina laden

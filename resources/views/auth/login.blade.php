@@ -32,9 +32,9 @@
                     </label>
                 </div>
 
-                <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center justify-between mb-6 ">
                     @if (Route::has('password.request'))
-                        <a class="text-sm text-blue-600 hover:underline" href="{{ route('password.request') }}">
+                        <a class="text-sm text-blue-600 hover:underline" href="{{ route('password.request') }}" >
                             {{ __('Forgot your password?') }}
                         </a>
                     @endif

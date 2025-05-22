@@ -42,6 +42,61 @@ header {
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
+
+}
+/* regiter */
+.registration-form {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Velden voor input */
+.registration-form input[type="text"],
+.registration-form input[type="email"],
+.registration-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.registration-form input[type="text"]:focus,
+.registration-form input[type="email"]:focus,
+.registration-form input[type="password"]:focus {
+    outline: none;
+    border-color: #2a9d8f;
+    box-shadow: 0 0 8px rgba(76, 111, 255, 0.3);
+}
+
+/* Knopstijl */
+.registration-form .primary-button {
+    background-color: #2a9d8f;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.registration-form .primary-button:hover {
+    background-color: #2a9d8f;
+}
+
+/* Mobiele aanpassingen */
+@media (max-width: 768px) {
+    .registration-form {
+        padding: 20px;
+        margin: 20px;
+    }
 }
 
 /* Table container */
@@ -142,6 +197,7 @@ header {
 nav {
     display: flex;
     gap: 20px;
+
 }
 
 nav a {
@@ -240,10 +296,10 @@ nav a {
     justify-content: center;
     gap: 30px;
     padding: 40px;
-    flex-wrap: wrap; /* zodat het op mobiel onder elkaar gaat */
+    flex-wrap: wrap;
 }
 a {
-    text-decoration: none; /* Verwijdert de onderstreping */
+    text-decoration: none;
     color: inherit;
 }
 
@@ -263,7 +319,7 @@ a {
 
 .inhoud i {
     font-size: 40px;
-    color: #000000; /* of een andere kleur die bij je branding past */
+    color: #000000;
 }
 
 .inhoud h3 {
@@ -369,7 +425,9 @@ a {
     min-height: 100px;
     resize: vertical;
 }
-
+#c{
+    color: #2b9e93;
+}
 .shop-edit button {
     padding: 0.75rem;
     background-color: #2b9e93;
@@ -406,7 +464,7 @@ a {
 
 }
 .edit-toggle:hover {
-    background-color: #459df3;
+    background-color: #2d5338;
 }
 .shop-add {
     display: flex;
@@ -672,7 +730,7 @@ a {
     background-color: #0d2727;
 }
 
-/* Responsive aanpassingen */
+/* Responsive*/
 @media (max-width: 768px) {
     .training-nav {
         flex-wrap: wrap;
@@ -706,6 +764,7 @@ a {
 .footer-icon {
     font-size: 30px;
     margin-bottom: 10px;
+    color: #35493b;
 }
 
 .footer-item h3,
@@ -748,7 +807,7 @@ a {
     }
 }
 
-/* Contact Page Styles  */
+/* Contact Page */
 .contact-page {
     max-width: 1200px;
     margin: 0 auto;
@@ -849,7 +908,7 @@ button[type="submit"]:hover {
 }
 
 .info-column h3 {
-    color: #2a9d8f; /* Groen/blauw zoals buttons */
+    color: #2a9d8f;
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
@@ -860,7 +919,6 @@ button[type="submit"]:hover {
     text-align: center;
 }
 
-/* Alert styling zoals in andere pagina's */
 .alert {
     padding: 1rem;
     margin-bottom: 1.5rem;
@@ -885,7 +943,7 @@ button[type="submit"]:hover {
     color: #0e4e50;
     border: 1px solid #c3e6cb;
 }
-/* Responsive aanpassingen */
+/* Responsive */
 @media (max-width: 768px) {
     .contact-page {
         padding: 1rem;
@@ -1186,7 +1244,7 @@ button[type="submit"]:hover {
 
 .input-field:focus {
     outline: none;
-    border-color: #4C6FFF;
+    border-color: #2d5338;
     box-shadow: 0 0 5px rgba(76, 111, 255, 0.3);
 }
 
@@ -1208,7 +1266,7 @@ button[type="submit"]:hover {
 }
 
 .primary-button {
-    background-color: #4C6FFF;
+    background-color: #2d5338;
     color: #fff;
     padding: 10px 20px;
     font-size: 16px;
@@ -1219,19 +1277,22 @@ button[type="submit"]:hover {
 }
 
 .primary-button:hover {
-    background-color: #365cbd;
+    background-color: #2d5338;
 }
 
 .auth-links {
     text-align: center;
     font-size: 14px;
+    margin-top: 10px;
 }
 
 .auth-links a {
-    color: #4C6FFF;
+    color: #2d5338;
     text-decoration: none;
     margin-left: 5px;
+
 }
+
 
 .auth-links a:hover {
     text-decoration: underline;
@@ -1251,6 +1312,7 @@ button[type="submit"]:hover {
     .flex.items-center.justify-between {
         flex-direction: column;
         gap: 10px;
+
     }
 }
 header {
@@ -1314,7 +1376,7 @@ nav a:hover {
     width: 100%; /* Full width */
 }
 
-/* Responsive behavior */
+/* Responsive */
 @media (max-width: 768px) {
     nav {
         display: none; /* Hide navigation links by default */
@@ -1330,15 +1392,19 @@ nav a:hover {
     }
 
     nav.show {
-        display: flex; /* Show links when toggled */
+        display: flex;
     }
 
     .hamburger {
-        display: flex; /* Show hamburger icon on mobile */
+        display: flex;
     }
 }
+#main-nav.open.show a.auth-btn {
+    color: black;
+}
 
-/* Loading spinner styles */
+
+/* Loading spinner */
 
 .spinner {
     border: 4px solid rgba(255, 255, 255, 0.3); /* Light color border */
