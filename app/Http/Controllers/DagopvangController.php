@@ -9,6 +9,8 @@ use App\Models\user;
 use App\Models\Dagopvang;
 use App\Mail\DagopvangInschrijving;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Intake;
+
 
 
 class DagopvangController extends Controller
@@ -23,6 +25,17 @@ class DagopvangController extends Controller
 
     public function store(Request $request)
     {
+        $intake = Intake::create([
+            'user_id' => auth()->id(),
+            'naam' => $request->input('naam'),
+            'naam_hond' => $request->input('naam_hond'),
+            // etc. alle velden invullen
+        ]);
+
+
+
+        // Redirect naar betaalpagina, met intake_id
+        return redirect()->route('payment', ['intake_id' => $intake->id]);
 
         $validated = $request->validate([
             'naam' => 'required|string|max:255',
@@ -36,6 +49,7 @@ class DagopvangController extends Controller
             'voorkeursdatum' => 'required|date',
             'age' => 'required|integer|min:0',
         ]);
+
 
         $user = Auth::user();
         $dogId = $request->dog_id;

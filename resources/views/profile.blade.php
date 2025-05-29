@@ -23,7 +23,24 @@
                 </div>
             @endforeach
         </div>
-        @if(session('success'))
+
+        @if($intake)
+            <h2>Intake Gegevens</h2>
+            <p><strong>Naam hond:</strong> {{ $intake->naam_hond }}</p>
+            <p><strong>Geboortedatum:</strong> {{ $intake->geboortedatum }}</p>
+            <p><strong>Ras:</strong> {{ $intake->ras }}</p>
+            <p><strong>Geslacht:</strong> {{ $intake->geslacht }}</p>
+
+            @if($intake->foto)
+                <p><strong>Foto hond:</strong></p>
+                <img src="{{ asset('storage/' . $intake->foto) }}" alt="Foto van de hond" style="max-width: 250px; border-radius: 10px;">
+            @endif
+        @else
+            <p>Er is nog geen intake ingevuld.</p>
+        @endif
+
+
+    @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                 {{ session('success') }}
             </div>

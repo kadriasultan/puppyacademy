@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Http\Controllers\IntakeController;
+
+
 use App\Http\Controllers\{
     ProfileController,
     ShopController,
@@ -13,7 +16,9 @@ use App\Http\Controllers\{
     Auth\RegisterController,
     DogController,
     AdminController
+
 };
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -78,7 +83,11 @@ Route::middleware('auth')->group(function () {
     });
 
     // Dagopvang
+
+
+
     Route::post('/dagopvang', [DagopvangController::class, 'store'])->name('dagopvang.store');
+
 
     // Payment routes
     Route::controller(ShopController::class)->prefix('payment')->group(function () {

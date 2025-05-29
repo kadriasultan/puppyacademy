@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Dagopvang;
 
+use App\Models\Intake; // Vergeet deze niet bovenaan als je hem nog niet hebt
 
 
 class ProfileController extends Controller
@@ -21,9 +22,13 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $inschrijvingen = Dagopvang::where('user_id', $user->id)->latest()->get();
+        $intake = Intake::where('user_id', $user->id)->latest()->first();
 
-        return view('profile', compact('user', 'inschrijvingen'));
+        return view('profile', compact('user', 'inschrijvingen', 'intake'));
     }
+
+
+
 
     public function edit(Request $request): View
     {

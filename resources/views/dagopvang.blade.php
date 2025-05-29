@@ -44,22 +44,18 @@
         </div>
 
         <div class="inschrijf-formulier">
-            <h4>Inschrijven voor de dagopvang</h4>
+            <h4>Inschrijven voor een Intake</h4>
 
 
             @if(session('success'))
                 <p style="color: green;">{{ session('success') }}</p>
             @endif
 
-            <form action="{{ route('dagopvang.store') }}" method="POST">
+            <form action="{{ route('dagopvang.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="voorkeursdag-selectie">
-                    <label for="voorkeursdatum">Kies een voorkeursdatum voor dagopvang:</label><br>
-                    <input type="date" id="voorkeursdatum" name="voorkeursdatum" required>
-                    <small style="color: gray;">Let op: alleen maandag, dinsdag of donderdag is mogelijk.</small>
-                </div><br>
-                <b2 for="eigenaar">Eigenaar Gegevens:</b2>
-                {{-- Automatisch ingevulde gegevens als ingelogd --}}
+
+                <h2>Eigenaar Gegevens</h2>
+
                 <label>Naam:
                     <input type="text" name="naam" value="{{ old('naam', optional($user)->name) }}" required>
                 </label><br>
@@ -67,12 +63,13 @@
                 <label>E-mailadres:
                     <input type="email" name="email" value="{{ old('email', optional($user)->email) }}" required>
                 </label><br>
+
                 <label>Telefoonnummer:
                     <input type="text" name="telefoon" value="{{ old('telefoon', optional($user)->phone) }}" required>
                 </label><br>
-                {{-- Alleen als gebruiker honden heeft --}}
+
                 @if($dogs->count())
-                    <label for="dog_select">Hond Gegevens:</label>
+                    <label for="dog_select">Selecteer een hond (indien van toepassing):</label>
                     <select id="dog_select" name="dog_id">
                         <option value="">-- Selecteer een hond --</option>
                         @foreach($dogs as $dog)
@@ -82,38 +79,47 @@
                                     data-nickname="{{ $dog->nickname }}"
                                     age="{{ $dog->age }}">
                                 {{ $dog->name }} ({{ $dog->breed }})
-
                             </option>
                         @endforeach
                     </select><br>
                 @endif
 
-                {{-- Altijd zichtbaar, eventueel automatisch ingevuld --}}
-                <label>Soort hond:
-                    <input type="text" id="soort_hond" name="soort_hond" value="{{ old('soort_hond') }}" required>
-                </label><br>
+                <h2>Hond Gegevens voor Intake Wandeling</h2>
+
                 <label>Naam van de hond:
                     <input type="text" id="naam_hond" name="naam_hond" value="{{ old('naam_hond') }}" required>
                 </label><br>
-                <label>Roepnaam:
-                    <input type="text" id="roepnaam" name="roepnaam" value="{{ old('roepnaam') }}" required>
-                </label><br>
-                <div class="form-group">
-                    <label for="age">Leeftijd</label>
-                    <input type="number" class="form-control" id="age" name="age" value="{{ old('age') }}" required min="1">
-                </div>
 
-                <label>Adres en postcode:
-                    <input type="text" name="adres" value="{{ old('adres') }}" required>
+                <label>Geboortedatum hond:
+                    <input type="date" id="geboortedatum_hond" name="geboortedatum_hond" value="{{ old('geboortedatum_hond') }}" required>
                 </label><br>
 
-                <label>Woonplaats:
-                    <input type="text" name="woonplaats" value="{{ old('woonplaats') }}" required>
+                <label>Ras:
+                    <input type="text" id="ras" name="ras" value="{{ old('ras') }}" required>
                 </label><br>
 
+                <label>Geslacht:
+                    <select id="geslacht" name="geslacht" required>
+                        <option value="">-- Kies geslacht --</option>
+                        <option value="reu" {{ old('geslacht') == 'reu' ? 'selected' : '' }}>Reu</option>
+                        <option value="teef" {{ old('geslacht') == 'teef' ? 'selected' : '' }}>Teef</option>
+                    </select>
+                </label><br>
 
-                <button type="submit">Inschrijven</button>
+                <label>Foto hond uploaden:
+                    <input type="file" id="foto_hond" name="foto_hond" accept="image/*" required>
+                </label><br>
+
+                <p style="margin-top: 1em; font-size: 0.9em; color: #555;">
+                    Kosten inplannen kennismaking wandeling zijn <strong>€10,-</strong>.<br>
+                    Deze moeten vooraf online voldaan worden.<br>
+                    Daarna kun je zelf via mijn agenda je kennismaking wandeling inplannen.<br>
+                    Duur wandeling: ongeveer 30 minuten.
+                </p>
+
+                <button type="submit">Intake Wandeling Boeken & Betalen</button>
             </form>
+
 
         </div>
 

@@ -20,16 +20,11 @@ main {
     width: 50%;
 }
 header {
-    background-color: #008080;
-    padding: 1rem;
-    text-align: end;
-    justify-content: space-between;
-    align-items: center;
+    height: 100px;
     display: flex;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
     color: #ffffff;
 }
 .burger i {
@@ -183,16 +178,7 @@ header {
 
 
 
-.logo h1 {
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    color: inherit;
-}
 
-.logo h1 i {
-    margin-right: 10px;
-}
 
 nav {
     display: flex;
@@ -740,57 +726,38 @@ a {
     .training-cards-container {
         grid-template-columns: 1fr;
     }
-}
-.footer {
-    background-color: #f8f9fa;
-    color: #343a40;
-    padding: 40px 20px 0 20px;
-    text-align: center;
-}
+}.footer-container {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-around;
+     gap: 20px;
+     padding: 20px;
+     background-color: #f8f8f8;
 
-.footer-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-}
+ }
 
 .footer-item {
-    flex: 1 1 45%;
-    padding: 10px;
+    flex: 1 1 250px;
+    max-width: 300px;
 }
 
 .footer-icon {
     font-size: 30px;
     margin-bottom: 10px;
-    color: #35493b;
+    color:  #2a9d8f;
 }
 
-.footer-item h3,
-.footer-location h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.footer-item p,
-.footer-location p {
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.footer-location {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: #e9ecef;
+.footer-social-icons a {
+    margin-top: 10px;
+    font-size: 50px;
 }
 
 .footer-bottom {
-    padding: 20px;
-    background-color: #264653;
-    color: white;
-    margin-top: 0;
+    text-align: center;
+    padding: 10px;
+    background-color: #070707;
+    margin-top: 20px;
+    color: aliceblue;
 }
 
 /* Responsive Design */
@@ -1319,10 +1286,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
     background-color: #026556;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     position: relative;
+    margin: 0;
 }
 
 .logo h1 {
@@ -1401,6 +1368,7 @@ nav a:hover {
 }
 #main-nav.open.show a.auth-btn {
     color: black;
+
 }
 
 

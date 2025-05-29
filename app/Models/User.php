@@ -12,7 +12,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    // العلاقة بين المستخدم والكلاب
     public function dogs()
     {
         return $this->hasMany(Dog::class);
@@ -20,7 +19,6 @@ class User extends Authenticatable
 
 
 
-    // الحقول التي يمكن ملؤها
     protected $fillable = [
         'name',
         'email',
@@ -42,4 +40,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function intakes()
+    {
+        return $this->hasMany(\App\Models\Intake::class);
+    }
+
+
 }
