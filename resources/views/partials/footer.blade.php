@@ -24,7 +24,7 @@
                 <a href="https://www.facebook.com/jouwpagina" target="_blank">
                     <i class="fab fa-facebook-square" style="color: #1877F2;"></i>
                 </a>
-                <a href="https://www.instagram.com/jouw_gebruikersnaam" target="_blank">
+                <a href="https://www.instagram.com/yuma_de_koning/" target="_blank">
                     <i class="fab fa-instagram" style="color: #E4405F;"></i>
                 </a>
             </div>
