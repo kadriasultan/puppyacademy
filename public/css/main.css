@@ -171,7 +171,7 @@ header {
     }
 }
 .S {
-    color: white;
+    color: #ffffff;
     font-weight: normal;
     background-color: transparent;
 }
@@ -311,6 +311,53 @@ a {
 .inhoud h3 {
     margin-top: 10px;
     font-size: 18px;
+}
+
+.owner-section {
+    background-color: #f8f9fa;
+    padding: 3rem 1.5rem;
+    margin: 2rem 0;
+}
+
+.owner-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.owner-image {
+    flex: 1;
+    min-width: 370px;
+    text-align: center;
+}
+
+.owner-image img {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.owner-info {
+    flex: 2;
+    min-width: 300px;
+}
+
+.owner-info h2 {
+    color: #264653;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.owner-info p {
+    color: #4b5563;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
 }
 
 .shop-heading {
@@ -1327,6 +1374,67 @@ nav a:hover {
 
 
 /* Hamburger icon */
+
+
+/* Burger menu styles */
+.burger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+/* Navigatie voor desktop */
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Mobiele stijlen */
+@media (max-width: 768px) {
+    .burger {
+        display: block;
+    }
+
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #0e4e50;
+        width: 100%;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 99;
+    }
+
+    nav.show {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav a {
+        padding: 0.5rem;
+    }
+}
+
+/* Winkelmandje popup styling */
+#cart-popup {
+    display: none;
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    width: 250px;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 .hamburger {
     display: none; /* Hidden by default */
     flex-direction: column;
@@ -1350,8 +1458,8 @@ nav a:hover {
         flex-direction: column; /* Stack links vertically */
         position: absolute; /* Positioning for dropdown */
         top: 70px; /* Position below the header */
-        right: 20px; /* Align to the right */
-        background-color: #fff; /* Background color */
+        right: 10px; /* Align to the right */
+        background-color: #f3ecec; /* Background color */
         padding: 20px; /* Padding around links */
         box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Shadow effect */
         border-radius: 8px; /* Rounded corners */
