@@ -51,6 +51,8 @@
                 <p style="color: green;">{{ session('success') }}</p>
             @endif
 
+
+
             <form action="{{ route('dagopvang.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
@@ -83,6 +85,7 @@
                         @endforeach
                     </select><br>
                 @endif
+
 
                 <h2>Hond Gegevens voor Intake Wandeling</h2>
 

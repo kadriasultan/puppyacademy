@@ -4,6 +4,15 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Http\Controllers\IntakeController;
+use App\Http\Controllers\GoogleController;
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 
 use App\Http\Controllers\{
@@ -25,6 +34,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dagopvang', [AdminController::class, 'manageDagopvang'])->name('admin.manageDagopvang');
 });
 
+Route::get('/dagopvang/bedankt', function () {
+    return view('dagopvang.bedankt');
+})->name('dagopvang.bedankt');
+
+// Voeg deze toe bij je andere routes:
+use App\Http\Controllers\AppointmentController;
+
+// Zorg dat deze route bestaat:
+Route::post('/afspraak/maken', [AppointmentController::class, 'maakAfspraak'])
+    ->name('afspraak.maken');
 // Public routes
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('welcome');

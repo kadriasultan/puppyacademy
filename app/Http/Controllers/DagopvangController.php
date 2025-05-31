@@ -25,18 +25,6 @@ class DagopvangController extends Controller
 
     public function store(Request $request)
     {
-        $intake = Intake::create([
-            'user_id' => auth()->id(),
-            'naam' => $request->input('naam'),
-            'naam_hond' => $request->input('naam_hond'),
-            // etc. alle velden invullen
-        ]);
-
-
-
-        // Redirect naar betaalpagina, met intake_id
-        return redirect()->route('payment', ['intake_id' => $intake->id]);
-
         $validated = $request->validate([
             'naam' => 'required|string|max:255',
             'adres' => 'required|string|max:255',
@@ -50,11 +38,10 @@ class DagopvangController extends Controller
             'age' => 'required|integer|min:0',
         ]);
 
-
         $user = Auth::user();
         $dogId = $request->dog_id;
 
-        // Indien ingelogd en geen bestaande hond geselecteerd → toevoegen
+        // Hond aanmaken indien nodig
         if ($user && !$dogId) {
             $dog = $user->dogs()->create([
                 'name' => $request->naam_hond,
@@ -65,8 +52,16 @@ class DagopvangController extends Controller
             $dogId = $dog->id;
         }
 
-        Dagopvang::create([
+        // Intake opslaan
+        $intake = Intake::create([
+            'user_id' => auth()->id(),
+            'naam' => $request->input('naam'),
+            'naam_hond' => $request->input('naam_hond'),
+            // Voeg hier alle andere intakevelden toe
+        ]);
 
+        // Dagopvang opslaan
+        Dagopvang::create([
             'user_id' => $user?->id,
             'dog_id' => $dogId,
             'naam' => $request->naam,
@@ -80,13 +75,23 @@ class DagopvangController extends Controller
             'voorkeursdatum' => $request->voorkeursdatum,
         ]);
 
-        $inschrijving = $request->only(['naam', 'adres', 'woonplaats', 'soort_hond', 'naam_hond', 'roepnaam', 'telefoon', 'email','age', 'voorkeursdatum']);
+        // Email versturen
+        $inschrijving = $request->only([
+            'naam', 'adres', 'woonplaats', 'soort_hond',
+            'naam_hond', 'roepnaam', 'telefoon', 'email', 'age', 'voorkeursdatum'
+        ]);
 
-        Mail::to($request->email)->send(new DagopvangInschrijving($inschrijving, Auth::user()));
+        Mail::to($request->email)->send(new DagopvangInschrijving($inschrijving, $user));
+        Mail::to('mgm@dr.com')->send(new DagopvangInschrijving($inschrijving, $user));
 
-        Mail::to('mgm@dr.com')->send(new DagopvangInschrijving($inschrijving, Auth::user()));
-
-        return back()->with('success', 'Je hebt je hond succesvol ingeschreven voor de dagopvang!');
+        // ✅ Pas hierna redirect toe
+        return redirect()->route('payment', ['intake_id' => $intake->id])
+            ->with('success', 'Je hebt je hond succesvol ingeschreven voor de dagopvang!');
+    }
+    public function build()
+    {
+        return $this->subject('Nieuwe Intake Aanmelding')
+            ->view('emails.intake_bevesteging'); // jouw aangepaste template
     }
 
     public function user()

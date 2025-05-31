@@ -23,7 +23,19 @@ class ShopController extends Controller
     public function processPayment(Request $request)
     {
         $paymentMethod = $request->input('payment_method');
-        return "Je hebt gekozen voor: " . ucfirst($paymentMethod) . ". Bedankt voor je bestelling! 🎉";
+
+        // Hier zou je normaal de betaling verwerken via je betaalprovider
+        // Voor nu simuleren we een succesvolle betaling
+
+        $betalingGeslaagd = true; // Simulatie
+
+        if ($betalingGeslaagd) {
+            // Na succesvolle betaling redirect naar bedankpagina
+            return redirect()->route('dagopvang.bedankt')->with('success', 'Betaling gelukt! Dank je wel.');
+        } else {
+            // Bij mislukte betaling terug naar betaalpagina met foutmelding
+            return redirect()->back()->withErrors('Betaling is mislukt, probeer het opnieuw.');
+        }
     }
 
     public function store(Request $request)
