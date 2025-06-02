@@ -36,7 +36,7 @@
                               type="password"
                               name="password_confirmation" required autocomplete="new-password" />
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-            </div>
+            </div><br><br>
 
             <!-- Dogs Information -->
             <div id="dogs-container">
@@ -49,11 +49,11 @@
 
                     <label>Geboortedatum hond:
                         <input type="date" id="geboortedatum_hond" name="geboortedatum_hond" value="{{ old('geboortedatum_hond') }}" required>
-                    </label><br>
+                    </label><br><br>
 
                     <label>Ras:
                         <input type="text" id="ras" name="ras" value="{{ old('ras') }}" required>
-                    </label><br>
+                    </label><br><br>
 
                     <label>Geslacht:
                         <select id="geslacht" name="geslacht" required>
@@ -61,16 +61,15 @@
                             <option value="Reu" {{ old('geslacht') == 'Reu' ? 'selected' : '' }}>Reu</option>
                             <option value="Teef" {{ old('geslacht') == 'Teef' ? 'selected' : '' }}>Teef</option>
                         </select>
-                    </label><br>
+                    </label><br><br>
 
                     <label>Foto hond uploaden:
+
                         <input type="file" id="foto_hond" name="foto_hond" accept="image/*" required>
 
-                    </label><br>
-            </div>
+                    </label><br><br>
+            </div><br>
 
-            <!-- Button to add more dogs -->
-            <button type="button" id="add-dog" class="mt-4">Voeg meer honden toe</button>
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
@@ -85,12 +84,4 @@
         </form>
     </x-guest-layout>
 @endsection
-
-<script>
-    document.getElementById('add-dog').addEventListener('click', function() {
-        let dogFields = document.querySelector('.dog-fields').cloneNode(true);
-        let container = document.getElementById('dogs-container');
-        container.appendChild(dogFields);
-    });
-</script>
 
