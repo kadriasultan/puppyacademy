@@ -1,10 +1,19 @@
 <header>
-    <div class="logo">
-        <h1><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
+
+    <div class="logo-container">
+        <div class="logo-left">
+            <div class="logo-text">
+                <img src="{{ asset('images/logo.png') }}" alt="Puppy Power Academy Logo" class="logo-image">
+                <p class="line1">Puppy Power</p>
+                <p class="line2">Academy</p>
+            </div>
+        </div>
+
         @if (Auth::check())
-            <a>Welkom {{ Auth::user()->name }}!</a>
+            <p class="welcome-text">Welkom {{ Auth::user()->name }}!</p>
         @endif
     </div>
+
 
     <button class="burger" onclick="toggleMenu()">
         <i class="fa-solid fa-bars"></i>
@@ -36,16 +45,64 @@
         </div>
     </nav>
 </header>
+
 <style>
-    nav a {
-        color: white;
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #026556;
+        border-bottom: 1px solid #ddd;
+        flex-wrap: wrap;
+height: 100px    }
+
+    .logo-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo-image {
+        height: 55px;
+        width: 170px;
+    }
+
+    .logo-text {
+        font-family: 'Arial', sans-serif;
+text-align: center;
+    }
+
+    .logo-text .line1 {
+        color: #ffffff;
+        padding: 0;
+        margin: 0;
+    }
+
+    .logo-text .line2 {
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .welcome-text {
+        font-size: 0.95rem;
+        color: #4caf50;
+        font-weight: 500;
     }
 
     @media (max-width: 768px) {
-        nav.show a {
-            color: black;
+        .logo-container {
+            flex-direction: column;
+            align-items: flex-start;
+
         }
+
+        .welcome-text {
+            margin-top: 10px;
+        }
+
+
     }
+
 
 </style>
 
