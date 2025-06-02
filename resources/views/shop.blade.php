@@ -6,6 +6,23 @@
     @endphp
 
     <main class="shop-page">
+        @if(session('success'))
+            <div class="alert alert-success" style=".alert-danger {
+            background-color: #3e5c47;
+            color: #070707;
+            border: 1px solid #f5c6cb;
+        }">
+                {{ session('success') }}
+            </div>
+        @endif
+
+
+        @if(session('error'))
+            <div class="alert alert-danger" style="color: #ffffff; font-weight: bold; text-align: center; background: red; padding: 10px 20px; border-radius: 8px;">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <!-- Shop secties -->
         <section class="shop-section">
             <h2 class="shop-heading">Cursussen</h2>

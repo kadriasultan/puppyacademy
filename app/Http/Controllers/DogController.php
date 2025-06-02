@@ -30,16 +30,19 @@ class DogController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'nickname' => 'required|string|max:255',
-            'breed' => 'required|string|max:255',
-            'age' => 'required|integer|min:0',
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'naam_hond' => 'required|string|max:255',
+            'geboortedatum_hond' => 'required|date',
+            'ras' => 'required|string|max:255',
+            'geslacht' => 'required|in:Reu,Teef',
+            'foto_hond' => 'required|image|max:2048',
         ]);
+
 
         Auth::user()->dogs()->create($request->all());
 
-        return redirect()->route('profile.show')
+        return redirect()->route('profile')
             ->with('success', 'Dog added successfully!');
     }
 

@@ -29,62 +29,6 @@ class ProfileController extends Controller
 
 
 
-
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user()->load('dogs')
-        ]);
-    }
-
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $user = $request->user();
-
-        // Update gebruikersgegevens
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email
-        ]);
-
-        // Verwerk honden
-        if ($request->has('dogs')) {
-            $dogIds = [];
-
-            foreach ($request->dogs as $dogData) {
-                // Alleen verwerken als naam is ingevuld
-                if (!empty($dogData['name'])) {
-                    if (!empty($dogData['id'])) {
-                        // Bestaande hond bijwerken
-                        $dog = $user->dogs()->updateOrCreate(
-                            ['id' => $dogData['id']],
-                            [
-                                'name' => $dogData['name'],
-                                'nickname' => $dogData['nickname'] ?? null,
-                                'breed' => $dogData['breed'] ?? null,
-                                'age' => $dogData['age'] ?? null
-                            ]
-                        );
-                        $dogIds[] = $dog->id;
-                    } else {
-                        // Nieuwe hond toevoegen
-                        $dog = $user->dogs()->create([
-                            'name' => $dogData['name'],
-                            'nickname' => $dogData['nickname'] ?? null,
-                            'breed' => $dogData['breed'] ?? null,
-                            'age' => $dogData['age'] ?? null
-                        ]);
-                        $dogIds[] = $dog->id;
-                    }
-                }
-            }
-
-            // Verwijder honden die niet in het formulier zaten
-            $user->dogs()->whereNotIn('id', $dogIds)->delete();
-        }
-
-        return redirect()->route('profile')->with('success', 'Profiel bijgewerkt!');
-    }
     /**
      * Delete the user's account.
      */
@@ -98,9 +42,7 @@ class ProfileController extends Controller
         }
 
         if (Auth::id() === $user->id) {
-            $request->validateWithBag('userDeletion', [
-                'password' => ['required', 'current_password'],
-            ]);
+            
 
             Auth::logout();
 

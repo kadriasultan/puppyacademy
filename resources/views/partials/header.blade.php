@@ -1,14 +1,10 @@
 <header>
-    <div class="logo-container">
-        <img src="{{ asset('images/logo.png') }}" alt="Puppy Power Academy Logo" class="logo-image">
-        <h3 class="line1">Puppy Power</h3>
-        <h3 class="line2">Academy</h3>
-
-    @if (Auth::check())
-            <p class="welcome-text">Welkom {{ Auth::user()->name }}!</p>
+    <div class="logo">
+        <h1><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
+        @if (Auth::check())
+            <a>Welkom {{ Auth::user()->name }}!</a>
         @endif
     </div>
-
 
     <button class="burger" onclick="toggleMenu()">
         <i class="fa-solid fa-bars"></i>
@@ -47,61 +43,11 @@
 
     @media (max-width: 768px) {
         nav.show a {
-            color: #ffffff;
+            color: black;
         }
     }
-    .logo-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 5px;
-    }
-
-    .logo-image {
-        max-width: 150px; /* pas aan voor groter of kleiner */
-        height: auto;
-    }
-
-    .line1,
-    .line2 {
-        margin: 0;
-        padding: 0;
-        font-weight: 10;
-        font-family: 'Arial', sans-serif;
-    }
-
-
-    .line1 {
-        font-size: 15px;
-        color: #ffffff;
-    }
-
-    .line2 {
-        font-size: 12px;
-        color: #ffffff;
-    }
-
-
 
 </style>
-
-<script>
-    const burger = document.querySelector('.burger');
-    const nav = document.querySelector('nav');
-
-    burger.addEventListener('click', () => {
-        nav.classList.toggle('show');
-    });
-
-    document.addEventListener('click', (event) => {
-        const isClickInside = nav.contains(event.target) || burger.contains(event.target);
-        if (!isClickInside) {
-            nav.classList.remove('show');
-        }
-    });
-</script>
-
 
 
 
@@ -272,4 +218,20 @@
         updateCart();
     });
 </script>
+<script>
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('nav');
+
+    burger.addEventListener('click', () => {
+        nav.classList.toggle('show');
+    });
+
+    document.addEventListener('click', (event) => {
+        const isClickInside = nav.contains(event.target) || burger.contains(event.target);
+        if (!isClickInside) {
+            nav.classList.remove('show');
+        }
+    });
+</script>
+
 

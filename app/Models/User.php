@@ -6,7 +6,7 @@ use App\Models\Dog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\OwnerDetail;
+
 
 class User extends Authenticatable
 {
@@ -26,13 +26,12 @@ class User extends Authenticatable
         'role',
     ];
 
-    // الحقول التي يجب إخفاؤها في التسلسل
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    // تحويل بعض الحقول مثل التاريخ إلى النوع المناسب
     protected function casts(): array
     {
         return [

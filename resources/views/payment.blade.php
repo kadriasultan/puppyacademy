@@ -21,6 +21,7 @@
                 <input type="radio" id="creditcard" name="payment_method" value="creditcard" required>
                 <label for="creditcard">Creditcard</label>
             </div>
+            <div id="checkout-total" style="font-size: 20px; font-weight: 600; margin-bottom: 20px; text-align: center;"></div>
 
             <button type="submit" style="background: green; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; margin-top: 20px;">
                 Betaal nu
@@ -28,3 +29,20 @@
         </form>
     </main>
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkoutTotalElement = document.getElementById('checkout-total');
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        let total = 0;
+        cart.forEach(item => {
+            total += item.price;
+        });
+
+        if (cart.length > 0) {
+            checkoutTotalElement.innerText = `Totaal te betalen: €${total.toFixed(2).replace('.', ',')}`;
+        } else {
+            checkoutTotalElement.innerText = 'Geen producten in winkelmandje.';
+        }
+    });
+</script>

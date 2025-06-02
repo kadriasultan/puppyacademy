@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
@@ -23,19 +24,48 @@
         <img src="http://www.deroedelthuis.com/wp-content/uploads/simple_photo_gallery/1/p1040326.jpg" class="slide">
     </div>
 </div>
-<section class="owner-section">
-    <div class="owner-container">
-        <div class="owner-image">
-            <img src="../images/Yuma1.jpg" alt="Yuma de Koning">
+@php
+    $isAdmin = auth()->check() && auth()->user()->role === 'admin';
+@endphp
+
+@if($owner)
+    <section class="owner-section">
+        <div class="owner-container">
+            <div class="owner-image">
+                <img id="owner-image-preview" src="{{ asset($owner->image) }}" alt="{{ $owner->name }}" style="max-width: 200px;">
+
+                @if($isAdmin)
+                    <input type="file" id="owner-image-upload" data-id="{{ $owner->id }}" style="display: none" onchange="uploadOwnerImage(this)">
+                @endif
+            </div>
+
+            <div class="owner-info">
+                <div id="owner-display">
+                    <h2 id="display-name">{{ $owner->name }}</h2>
+                    <p id="display-p1">{{ $owner->paragraph_1 }}</p>
+                    <p id="display-p2">{{ $owner->paragraph_2 }}</p>
+                    <p id="display-p3">{{ $owner->paragraph_3 }}</p>
+                </div>
+
+                @if($isAdmin)
+                    <div id="owner-edit-form" style="display: none;">
+                        <input type="text" id="edit-name" class="form-control" value="{{ $owner->name }}"><br>
+                        <textarea id="edit-p1" class="form-control">{{ $owner->paragraph_1 }}</textarea><br>
+                        <textarea id="edit-p2" class="form-control">{{ $owner->paragraph_2 }}</textarea><br>
+                        <textarea id="edit-p3" class="form-control">{{ $owner->paragraph_3 }}</textarea><br>
+                    </div>
+
+
+                    <div class="admin-controls mt-2">
+                        <button id="edit-button" onclick="toggleEdit()">Bewerken</button>
+                        <button id="save-button" onclick="saveOwnerSection({{ $owner->id }})" style="display: none;">Opslaan</button>
+                    </div>
+                @endif
+            </div>
         </div>
-        <div class="owner-info">
-            <h2>Yuma de Koning</h2>
-            <p>Yuma de Koning is de trotse eigenaar en oprichter van Puppy Power Academy. Met meer dan 15 jaar ervaring in hondentraining en -verzorging, heeft Yuma een passie voor het helpen van honden en hun eigenaren om het beste uit elkaar te halen.</p>
-            <p>Haar filosofie is gebaseerd op positieve bekrachtiging en het opbouwen van een sterke band tussen hond en eigenaar. Yuma is gecertificeerd in verschillende hondentrainingsmethoden en blijft zich constant bijscholen om de nieuwste inzichten in hondengedrag toe te passen.</p>
-            <p>Bij Puppy Power Academy staat Yuma bekend om haar geduld, expertise en liefde voor alle honden, van kleine pups tot volwassen honden met speciale behoeften.</p>
-        </div>
-    </div>
-</section>
+    </section>
+@endif
+
 <div class="container">
     <a href="/shop">
         <div class="inhoud">
@@ -61,5 +91,88 @@
 
 
 </body>
+@if($isAdmin)
+    <script>
+        function toggleEdit() {
+            document.getElementById('owner-display').style.display = 'none';
+            document.getElementById('owner-edit-form').style.display = 'block';
+            document.getElementById('edit-button').style.display = 'none';
+            document.getElementById('owner-image-upload').style.display = 'block';
+            document.getElementById('save-button').style.display = 'inline-block';
+        }
+
+        function saveOwnerSection(id) {
+            const data = {
+                name: document.getElementById('edit-name').value,
+                paragraph_1: document.getElementById('edit-p1').value,
+                paragraph_2: document.getElementById('edit-p2').value,
+                paragraph_3: document.getElementById('edit-p3').value,
+            };
+
+            fetch('/admin/owner-section/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(response => {
+
+                    document.getElementById('display-name').innerText = data.name;
+                    document.getElementById('display-p1').innerText = data.paragraph_1;
+                    document.getElementById('display-p2').innerText = data.paragraph_2;
+                    document.getElementById('display-p3').innerText = data.paragraph_3;
+
+
+                    document.getElementById('owner-display').style.display = 'block';
+                    document.getElementById('owner-edit-form').style.display = 'none';
+                    document.getElementById('owner-image-upload').style.display = 'none';
+                    document.getElementById('edit-button').style.display = 'inline-block';
+                    document.getElementById('save-button').style.display = 'none';
+
+                    alert('Inhoud succesvol opgeslagen!');
+                })
+                .catch(error => {
+                    console.error('Fout bij opslaan:', error);
+                    alert('Er is iets misgegaan bij het opslaan.');
+                });
+        }
+    </script>
+@endif
+<script>
+    function uploadOwnerImage(input) {
+        const id = input.dataset.id;
+        const file = input.files[0];
+
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('/admin/owner-section/upload-image/' + id, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('owner-image-preview').src = data.image_url;
+                    alert('Afbeelding succesvol geüpload!');
+                } else {
+                    alert('Fout bij uploaden van afbeelding.');
+                }
+            })
+            .catch(error => {
+                console.error('Uploadfout:', error);
+                alert('Er is een fout opgetreden.');
+            });
+    }
+</script>
+
 </html>
 @endsection

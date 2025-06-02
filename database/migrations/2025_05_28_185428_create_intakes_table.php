@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('intakes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('naam');
+            $table->string('phone',20);
             $table->string('naam_hond');
             $table->date('geboortedatum')->nullable();
             $table->string('ras')->nullable();

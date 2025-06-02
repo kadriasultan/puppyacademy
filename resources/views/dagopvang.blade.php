@@ -59,15 +59,18 @@
                 <h2>Eigenaar Gegevens</h2>
 
                 <label>Naam:
-                    <input type="text" name="naam" value="{{ old('naam', optional($user)->name) }}" required>
+                    <input type="text" id="naam" name="naam" value="{{ old('naam', optional($user)->name) }}" required>
                 </label><br>
 
                 <label>E-mailadres:
-                    <input type="email" name="email" value="{{ old('email', optional($user)->email) }}" required>
+                    <input type="email" id="email"  name="email" value="{{ old('email', optional($user)->email) }}" required>
                 </label><br>
 
                 <label>Telefoonnummer:
-                    <input type="text" name="telefoon" value="{{ old('telefoon', optional($user)->phone) }}" required>
+                    <input type="tel" id="phone" name="phone" value="{{ old('phone', optional($user)->phone) }}" class="form-control @error('phone') is-invalid @enderror" required pattern="[0-9+\s\-()]{7,15}">
+                    @error('phone')
+                    <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </label><br>
 
                 @if($dogs->count())
@@ -76,11 +79,12 @@
                         <option value="">-- Selecteer een hond --</option>
                         @foreach($dogs as $dog)
                             <option value="{{ $dog->id }}"
-                                    data-breed="{{ $dog->breed }}"
-                                    data-name="{{ $dog->name }}"
-                                    data-nickname="{{ $dog->nickname }}"
-                                    age="{{ $dog->age }}">
-                                {{ $dog->name }} ({{ $dog->breed }})
+                                    ras="{{ $dog->ras }}"
+                                    naam_hond="{{ $dog->naam_hond }}"
+                                    geboortedatum="{{ $dog->geboortedatum }}"
+                                    geslacht="{{ $dog->geslacht }}"
+                                    foto="{{ asset($dog->foto) }}">
+                                {{ $dog->naam_hond }} ({{ $dog->ras }})
                             </option>
                         @endforeach
                     </select><br>
@@ -104,14 +108,15 @@
                 <label>Geslacht:
                     <select id="geslacht" name="geslacht" required>
                         <option value="">-- Kies geslacht --</option>
-                        <option value="reu" {{ old('geslacht') == 'reu' ? 'selected' : '' }}>Reu</option>
-                        <option value="teef" {{ old('geslacht') == 'teef' ? 'selected' : '' }}>Teef</option>
+                        <option value="Reu" {{ old('geslacht') == 'Reu' ? 'selected' : '' }}>Reu</option>
+                        <option value="Teef" {{ old('geslacht') == 'Teef' ? 'selected' : '' }}>Teef</option>
                     </select>
                 </label><br>
 
                 <label>Foto hond uploaden:
                     <input type="file" id="foto_hond" name="foto_hond" accept="image/*" required>
                 </label><br>
+                <img id="hond_foto_preview" src="" alt="Foto van de hond" style="max-width: 250px; border-radius: 10px; display: none; margin-top: 1em;">
 
                 <p style="margin-top: 1em; font-size: 0.9em; color: #555;">
                     Kosten inplannen kennismaking wandeling zijn <strong>€10,-</strong>.<br>
@@ -128,18 +133,40 @@
 
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function () {
             const dogSelect = document.getElementById('dog_select');
+            const naamHondInput = document.getElementById('naam_hond');
+            const geboortedatumInput = document.getElementById('geboortedatum_hond');
+            const rasInput = document.getElementById('ras');
+            const geslachtInput = document.getElementById('geslacht');
+            const hondFotoPreview = document.getElementById('hond_foto_preview');
+
             if (dogSelect) {
                 dogSelect.addEventListener('change', function () {
-                    const selected = this.options[this.selectedIndex];
-                    document.getElementById('soort_hond').value = selected.dataset.breed || '';
-                    document.getElementById('naam_hond').value = selected.dataset.name || '';
-                    document.getElementById('roepnaam').value = selected.dataset.nickname || '';
-                    document.getElementById('age').value = selected.getAttribute('age') || '';
+                    const selectedOption = dogSelect.options[dogSelect.selectedIndex];
+
+                    const naam_hond = selectedOption.getAttribute('naam_hond') || '';
+                    const geboortedatum = selectedOption.getAttribute('geboortedatum') || '';
+                    const ras = selectedOption.getAttribute('ras') || '';
+                    const geslacht = selectedOption.getAttribute('geslacht') || '';
+                    const foto = selectedOption.getAttribute('foto') || '';
+
+                    naamHondInput.value = naam_hond;
+                    geboortedatumInput.value = geboortedatum;
+                    rasInput.value = ras;
+                    geslachtInput.value = geslacht;
+
+                    if(foto){
+                        hondFotoPreview.src = foto;
+                        hondFotoPreview.style.display = 'block';
+                    } else {
+                        hondFotoPreview.src = '';
+                        hondFotoPreview.style.display = 'none';
+                    }
                 });
             }
         });
+
     </script>
 
     <script>

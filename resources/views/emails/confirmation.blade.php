@@ -30,11 +30,14 @@
 <p>We hebben je bericht ontvangen en zullen zo snel mogelijk contact met je opnemen. Hieronder kun je je bericht nogmaals bekijken:</p>
 
 <blockquote>
+    <p><strong>Onderwerp:</strong> {{ $onderwerp}}</p>
+
     <p>{{ $messageContent}}</p>
 </blockquote>
 
 <p>Met vriendelijke groet,</p>
 <h2>Puppy Power Academy</h2>
-<p>Tel: 0000000000</p>
+<p>Yuma</p>
+<p>Tel: +31 623730956</p>
 </body>
 </html>

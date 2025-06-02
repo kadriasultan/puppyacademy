@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('dogs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('nickname');
-            $table->string('breed');
-            $table->integer('age');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('naam');
+            $table->string('naam_hond');
+            $table->date('geboortedatum')->nullable();
+            $table->string('ras')->nullable();
+            $table->string('geslacht')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
 

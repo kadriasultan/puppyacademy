@@ -5,23 +5,37 @@
     <title>Bevestiging Intakewandeling</title>
 </head>
 <body>
-<h2>Bedankt voor je inschrijving, {{ $data['naam'] }}!</h2>
+<h2>Bedankt voor je inschrijving, {{ $inschrijving['naam'] }}!</h2>
 
 <p>Hierbij bevestigen wij jouw aanvraag voor een intakewandeling.</p>
 
 <h3>Gegevens eigenaar:</h3>
 <ul>
-    <li><strong>Naam:</strong> {{ $data['naam'] }}</li>
-    <li><strong>E-mailadres:</strong> {{ $data['email'] }}</li>
-    <li><strong>Telefoon:</strong> {{ $data['telefoon'] }}</li>
+    <li><strong>Naam:</strong> {{ $inschrijving['naam'] }}</li>
+    <li><strong>E-mailadres:</strong> {{ $inschrijving['email'] }}</li>
+    <li><strong>Telefoon:</strong> {{ $inschrijving['phone'] }}</li>
 </ul>
 
 <h3>Gegevens hond:</h3>
 <ul>
-    <li><strong>Naam:</strong> {{ $data['naam_hond'] }}</li>
-    <li><strong>Geboortedatum:</strong> {{ $data['geboortedatum_hond'] }}</li>
-    <li><strong>Ras:</strong> {{ $data['ras'] }}</li>
-    <li><strong>Geslacht:</strong> {{ $data['geslacht'] }}</li>
+    <li><strong>Naam:</strong> {{ $inschrijving['naam_hond'] }}</li>
+    <li><strong>Geboortedatum Hond:</strong> {{ \Carbon\Carbon::parse($inschrijving['geboortedatum'])->format('d/m/Y') }}</li>
+
+
+    <li><strong>Ras:</strong> {{ $inschrijving['ras'] }}</li>
+    <li><strong>Geslacht:</strong> {{ $inschrijving['geslacht'] }}</li>
+    <li><strong>Foto van {{ $inschrijving['naam_hond'] }}:</strong><br>
+
+        @php
+            $path = public_path($inschrijving['foto']);
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        @endphp
+
+        <img src="{{ $base64 }}" alt="Foto van de hond" style="max-width:200px; height:auto;">
+    </li>
+
 </ul>
 
 <p>De intakewandeling kost €10 en duurt ongeveer 30 minuten.</p>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Dog;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,30 +30,45 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'naam_hond' => 'string|max:255',
+            'geboortedatum_hond' => 'date',
+            'ras' => 'string|max:255',
+            'geslacht' => 'in:Reu,Teef',
+            'foto_hond' => 'image|max:2048',
         ]);
 
+        // Upload de hondenfoto
+        $imageName = null;
+        if ($request->hasFile('foto_hond')) {
+            $image = $request->file('foto_hond');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/honden'), $imageName);
+        }
+
+        // Maak de user aan
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
-        foreach ($request->dog_name as $index => $dogName) {
-            \App\Models\Dog::create([
-                'user_id' => $user->id,
-                'name' => $dogName,
-                'nickname' => $request->dog_roepnaam[$index],
-                'breed' => $request->dog_soort[$index],
-                'age' => $request->dog_age[$index],
-            ]);
-        }
+
+        // Maak de hond aan, gekoppeld aan de user
+        $Dog = Dog::create([
+            'user_id' => $user->id,
+            'naam' => $validated['name'],
+            'naam_hond' => $validated['naam_hond'],
+            'geboortedatum' => $validated['geboortedatum_hond'],
+            'ras' => $validated['ras'],
+            'geslacht' => $validated['geslacht'],
+            'foto' => $imageName ? 'images/honden/' . $imageName : null,
+        ]);
 
         return redirect(route('welcome', absolute: false));
     }

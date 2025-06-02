@@ -22,76 +22,125 @@ class DagopvangController extends Controller
         return view('dagopvang', compact('user', 'dogs'));
     }
 
-
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'naam' => 'required|string|max:255',
-            'adres' => 'required|string|max:255',
-            'woonplaats' => 'required|string|max:255',
-            'soort_hond' => 'required|string|max:255',
-            'naam_hond' => 'required|string|max:255',
-            'roepnaam' => 'required|string|max:255',
-            'telefoon' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'voorkeursdatum' => 'required|date',
-            'age' => 'required|integer|min:0',
+            'phone' => 'required|regex:/^[0-9+\s\-()]{7,15}$/',
+            'naam_hond' => 'required|string|max:255',
+            'geboortedatum_hond' => 'required|date',
+            'ras' => 'required|string|max:255',
+            'geslacht' => 'required|in:Reu,Teef',
+            'foto_hond' => 'required|image|max:2048',
         ]);
 
+
+        if ($request->hasFile('foto_hond')) {
+            $image = $request->file('foto_hond');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('images/honden');
+            $image->move($destinationPath, $imageName);
+        } else {
+            $imageName = null;
+        }
+
+
+        $intake = Intake::create([
+            'user_id' => auth()->id(),
+            'naam' => $validated['naam'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'naam_hond' => $validated['naam_hond'],
+            'geboortedatum' => $validated['geboortedatum_hond'],
+            'ras' => $validated['ras'],
+            'geslacht' => $validated['geslacht'],
+            'foto' => 'images/honden/'.$imageName,
+        ]);
         $user = Auth::user();
         $dogId = $request->dog_id;
 
-        // Hond aanmaken indien nodig
-        if ($user && !$dogId) {
-            $dog = $user->dogs()->create([
-                'name' => $request->naam_hond,
-                'nickname' => $request->roepnaam,
-                'breed' => $request->soort_hond,
-                'age' => $request->age,
-            ]);
+        if (!$dogId) {
+            if ($user) {
+               $dog = $user->dogs()->create([
+                    'naam' => $validated['naam'],
+                    'email' => $validated['email'],
+                    'phone' => $validated['phone'],
+                    'naam_hond' => $validated['naam_hond'],
+                    'geboortedatum' => $validated['geboortedatum_hond'],
+                    'ras' => $validated['ras'],
+                    'geslacht' => $validated['geslacht'],
+                    'foto' => 'images/honden/'.$imageName,
+                ]);
+            } else {
+
+                $dog = \App\Models\Dog::create([
+                    'naam' => $validated['naam'],
+                    'email' => $validated['email'],
+                    'phone' => $validated['phone'],
+                    'naam_hond' => $validated['naam_hond'],
+                    'geboortedatum' => $validated['geboortedatum_hond'],
+                    'ras' => $validated['ras'],
+                    'geslacht' => $validated['geslacht'],
+                    'foto' => 'images/honden/'.$imageName,
+
+                ]);
+            }
+
             $dogId = $dog->id;
         }
 
-        // Intake opslaan
-        $intake = Intake::create([
-            'user_id' => auth()->id(),
-            'naam' => $request->input('naam'),
-            'naam_hond' => $request->input('naam_hond'),
-            // Voeg hier alle andere intakevelden toe
-        ]);
+        // Mail data voorbereiden
+        $inschrijving = [
+            'naam' => $validated['naam'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'naam_hond' => $validated['naam_hond'],
+            'geboortedatum' => $validated['geboortedatum_hond'],
+            'ras' => $validated['ras'],
+            'geslacht' => $validated['geslacht'],
+            'foto' => 'images/honden/'.$imageName,
+        ];
 
-        // Dagopvang opslaan
-        Dagopvang::create([
-            'user_id' => $user?->id,
-            'dog_id' => $dogId,
-            'naam' => $request->naam,
-            'adres' => $request->adres,
-            'woonplaats' => $request->woonplaats,
-            'soort_hond' => $request->soort_hond,
-            'naam_hond' => $request->naam_hond,
-            'roepnaam' => $request->roepnaam,
-            'telefoon' => $request->telefoon,
-            'email' => $request->email,
-            'voorkeursdatum' => $request->voorkeursdatum,
-        ]);
+        Mail::to($validated['email'])->send(new DagopvangInschrijving($inschrijving, Auth::user()));
+        Mail::to('mgm@dr.com')->send(new DagopvangInschrijving($inschrijving, Auth::user()));
 
-        // Email versturen
-        $inschrijving = $request->only([
-            'naam', 'adres', 'woonplaats', 'soort_hond',
-            'naam_hond', 'roepnaam', 'telefoon', 'email', 'age', 'voorkeursdatum'
-        ]);
-
-        Mail::to($request->email)->send(new DagopvangInschrijving($inschrijving, $user));
-        Mail::to('mgm@dr.com')->send(new DagopvangInschrijving($inschrijving, $user));
-
-        // ✅ Pas hierna redirect toe
-        return redirect()->route('payment', ['intake_id' => $intake->id])
-            ->with('success', 'Je hebt je hond succesvol ingeschreven voor de dagopvang!');
-    }
-    public function build()
+        return redirect()->route('dagopvang.payment', ['intake_id' => $intake->id]);
+ }
+    public function intakepayment(Request $request)
     {
-        return $this->subject('Nieuwe Intake Aanmelding')
-            ->view('emails.intake_bevesteging'); // jouw aangepaste template
+        return view('dagopvang.payment');
+    }
+
+    public function processintakepayment(Request $request)
+    {
+        $request->validate([
+            'payment_method' => 'required|string|in:bank,ideal,tikki',
+        ]);
+
+        $paymentMethod = $request->input('payment_method');
+
+        if ($paymentMethod === 'ideal') {
+            // Redirect direct (of maak dezelfde flow als bank)
+            return redirect('https://www.ing.nl/payreq/m/?trxid=7cMPUFyxozWfzrR9IePxCbq4XKPUun6x');
+        }
+        if ($paymentMethod === 'bank') {
+            // Deze case wordt door JS afgehandeld, dus kan leeg blijven of redirect terug
+            return redirect()->route('dagopvang.bedankt')->with('success', 'Betaling gelukt! Dank je wel.');
+        }
+        if ($paymentMethod === 'tikki') {
+            return redirect('https://www.tikkie.me/');
+        }
+
+        // Voor andere betaalmethodes
+        $betalingGeslaagd = true; // Logica hier
+
+        if ($betalingGeslaagd) {
+            return redirect()->route('dagopvang.bedankt')->with('success', 'Betaling gelukt! Dank je wel.');
+        } else {
+            return redirect()->back()->withErrors('Betaling is mislukt, probeer het opnieuw.');
+        }
     }
 
     public function user()

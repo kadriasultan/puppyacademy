@@ -9,7 +9,7 @@
 
 
     <main style="max-width: 600px; margin: 50px auto; text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-        <h2>🎉 Bedankt voor je betaling!</h2>
+        <h2>🎉 Bedankt! Wij gaan controleren of de betaling gelukt is</h2>
         <p>Je intakewandeling is succesvol geboekt.</p>
         <p>Plan nu je wandeling in via onze agenda.</p>
         <br>
@@ -35,7 +35,7 @@
             @csrf
 
             <label for="start" style="font-weight: 600;">Starttijd</label>
-            <input type="datetime-local" id="start" name="start" step="300" required
+            <input type="datetime-local" id="start" name="start" step="900" required placeholder="Kies een datum en tijd..."
                    style="width: 100%; padding: 10px; margin: 8px 0 20px 0; border-radius: 6px; border: 1.5px solid #ddd; font-size: 1rem;">
 
             <label for="beschrijving" style="font-weight: 600;">Naam eigenaar</label>
@@ -63,47 +63,57 @@
         </form>
 
 
-    </main>
-@endsection
+        <!-- Flatpickr -->
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-@section('scripts')
-    <script>
-        document.getElementById('start').addEventListener('change', function() {
-            let dt = new Date(this.value);
-            if (isNaN(dt)) return;
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const input = document.getElementById('start');
 
-            let minutes = dt.getMinutes();
-            let rounded = Math.round(minutes / 5) * 5;
-            if (rounded === 60) {
-                dt.setHours(dt.getHours() + 1);
-                dt.setMinutes(0);
-            } else {
-                dt.setMinutes(rounded);
-            }
-            dt.setSeconds(0);
-            dt.setMilliseconds(0);
+                    // Set minimum datetime to current time rounded up to next 15 minutes
+                    const now = new Date();
+                    now.setMinutes(Math.ceil(now.getMinutes() / 15) * 15, 0, 0);
 
-            // Format datetime-local input value als 'yyyy-MM-ddTHH:mm'
-            let y = dt.getFullYear();
-            let m = (dt.getMonth()+1).toString().padStart(2, '0');
-            let d = dt.getDate().toString().padStart(2, '0');
-            let h = dt.getHours().toString().padStart(2, '0');
-            let min = dt.getMinutes().toString().padStart(2, '0');
+                    const iso = now.toISOString().slice(0, 16); // 'YYYY-MM-DDTHH:mm'
+                    input.min = iso;
 
-            this.value = `${y}-${m}-${d}T${h}:${min}`;
-        });
+                    // Flatpickr initialization
+                    flatpickr("#start", {
+                        enableTime: true,
+                        dateFormat: "Y-m-d H:i",
+                        time_24hr: true,
+                        minuteIncrement: 5,
+                        minDate: now
+                    });
 
-    </script>
+                    // On change, round selected time to nearest 15 minutes
+                    input.addEventListener('change', function () {
+                        let dt = new Date(this.value);
+                        if (isNaN(dt)) return;
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("#start", {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            time_24hr: true,
-            minuteIncrement: 5
-        });
-    </script>
+                        // Round to nearest 15 minutes
+                        let minutes = dt.getMinutes();
+                        let rounded = Math.round(minutes / 15) * 15;
+                        if (rounded === 60) {
+                            dt.setHours(dt.getHours() + 1);
+                            dt.setMinutes(0);
+                        } else {
+                            dt.setMinutes(rounded);
+                        }
+                        dt.setSeconds(0);
+                        dt.setMilliseconds(0);
+
+                        let y = dt.getFullYear();
+                        let m = String(dt.getMonth() + 1).padStart(2, '0');
+                        let d = String(dt.getDate()).padStart(2, '0');
+                        let h = String(dt.getHours()).padStart(2, '0');
+                        let min = String(dt.getMinutes()).padStart(2, '0');
+
+                        this.value = `${y}-${m}-${d}T${h}:${min}`;
+                    });
+                });
+            </script>
+
     @vite('resources/js/app.js')
 
 @endsection

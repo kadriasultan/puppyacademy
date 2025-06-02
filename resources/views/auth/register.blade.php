@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('content')
     <x-guest-layout>
-        <form method="POST" action="{{ route('register') }}" class="registration-form">
-            @csrf
+        <form method="POST" action="{{ route('register') }}" class="registration-form" enctype="multipart/form-data">
+
+        @csrf
 
             <!-- Name -->
             <div>
@@ -41,25 +42,31 @@
             <div id="dogs-container">
                 <div class="dog-fields mt-4">
                     <!-- Naam van de hond -->
-                    <x-input-label for="dog_name" :value="__('Naam van de Hond')" />
-                    <x-text-input id="dog_name" class="block mt-1 w-full" type="text" name="dog_name[]" :value="old('dog_name.0')" required />
-                    <x-input-error :messages="$errors->get('dog_name.0')" class="mt-2" />
+                    <x-input-label for="naam_hond" :value="__('Naam van de Hond')" />
+                    <x-text-input id="naam_hond" class="block mt-1 w-full" type="text" name="naam_hond" :value="old('naam_hond.0')" required />
+                    <x-input-error :messages="$errors->get('naam_hond.0')" class="mt-2" />
 
-                    <!-- Roepnaam van de hond -->
-                    <x-input-label for="dog_roepnaam" :value="__('Roepnaam van de Hond')" />
-                    <x-text-input id="dog_roepnaam" class="block mt-1 w-full" type="text" name="dog_roepnaam[]" :value="old('dog_roepnaam.0')" required />
-                    <x-input-error :messages="$errors->get('dog_roepnaam.0')" class="mt-2" />
 
-                    <!-- Soort van de hond -->
-                    <x-input-label for="dog_soort" :value="__('Soort van de Hond')" />
-                    <x-text-input id="dog_soort" class="block mt-1 w-full" type="text" name="dog_soort[]" :value="old('dog_soort.0')" required />
-                    <x-input-error :messages="$errors->get('dog_soort.0')" class="mt-2" />
+                    <label>Geboortedatum hond:
+                        <input type="date" id="geboortedatum_hond" name="geboortedatum_hond" value="{{ old('geboortedatum_hond') }}" required>
+                    </label><br>
 
-                    <!-- Leeftijd van de hond -->
-                    <x-input-label for="dog_age" :value="__('Leeftijd van de Hond')" />
-                    <x-text-input id="dog_age" class="block mt-1 w-full" type="number" name="dog_age[]" :value="old('dog_age.0')" required />
-                    <x-input-error :messages="$errors->get('dog_age.0')" class="mt-2" />
-                </div>
+                    <label>Ras:
+                        <input type="text" id="ras" name="ras" value="{{ old('ras') }}" required>
+                    </label><br>
+
+                    <label>Geslacht:
+                        <select id="geslacht" name="geslacht" required>
+                            <option value="">-- Kies geslacht --</option>
+                            <option value="Reu" {{ old('geslacht') == 'Reu' ? 'selected' : '' }}>Reu</option>
+                            <option value="Teef" {{ old('geslacht') == 'Teef' ? 'selected' : '' }}>Teef</option>
+                        </select>
+                    </label><br>
+
+                    <label>Foto hond uploaden:
+                        <input type="file" id="foto_hond" name="foto_hond" accept="image/*" required>
+
+                    </label><br>
             </div>
 
             <!-- Button to add more dogs -->
@@ -73,6 +80,7 @@
                 <x-primary-button class="ms-4">
                     {{ __('Register') }}
                 </x-primary-button>
+            </div>
             </div>
         </form>
     </x-guest-layout>

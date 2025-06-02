@@ -10,11 +10,13 @@ class ConfirmationEmail extends Mailable
     use SerializesModels;
 
     public $name;
+    public $onderwerp;
     public $messageContent;
 
     // Ontvangen van het bericht object
     public function __construct($message)
     {
+        $this->onderwerp = $message->onderwerp;
         $this->name = $message->name;
         $this->messageContent = $message->message; // Zorg ervoor dat dit een string is
     }
@@ -25,6 +27,7 @@ class ConfirmationEmail extends Mailable
         return $this->view('emails.confirmation')
             ->subject('Bevestiging van je bericht')
             ->with([
+                'onderwerp' => $this->onderwerp,
                 'name' => $this->name,
                 'message' => $this->messageContent,  // Dit moet een string zijn
             ]);

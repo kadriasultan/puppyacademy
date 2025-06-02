@@ -4,15 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Http\Controllers\IntakeController;
-use App\Http\Controllers\GoogleController;
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-
-
-Route::get('/auth/google/redirect', [GoogleController::class, 'redirectToGoogle']);
-Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 
 use App\Http\Controllers\{
@@ -33,6 +27,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/dagopvang', [AdminController::class, 'manageDagopvang'])->name('admin.manageDagopvang');
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::put('/admin/owner-section/{id}', [HomeController::class, 'update']);
+});
+Route::post('/admin/owner-section/upload-image/{id}', [HomeController::class, 'uploadImage']);
 
 Route::get('/dagopvang/bedankt', function () {
     return view('dagopvang.bedankt');
@@ -66,25 +65,20 @@ Route::controller(ContactController::class)->group(function () {
     Route::post('/contact', 'send')->name('contact.send');
 });
 
-// Registration routes
-Route::controller(RegisterController::class)->group(function () {
-    Route::get('/register', 'showRegistrationForm')->name('register');
-    Route::post('/register', 'register');
-});
+
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
-    // Profile routes
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         Route::get('/', 'index')->name('profile');
-        Route::get('/edit', 'edit')->name('profile.edit');
-        Route::patch('/', 'update')->name('profile.update');
-        Route::delete('/{id}', 'destroy')->name('profile.destroy');
+        Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/{userId}', 'showProfile');
+
     });
 
     // Dogs resource
-    Route::resource('dogs', DogController::class)->except(['show']); // Exclude show if not needed
+    Route::resource('dogs', DogController::class);
+
 
     // Shop routes
     Route::controller(ShopController::class)->prefix('shop')->group(function () {
@@ -92,7 +86,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', 'update')->name('shop.update');
         Route::delete('/{id}', 'destroy')->name('shop.destroy');
     });
-
+    Route::controller(ShopController::class)->prefix('payment')->group(function () {
+        Route::get('/', 'showPaymentPage')->name('payment');
+        Route::post('/', 'processPayment')->name('payment.process');
+    });
     // Training routes
     Route::controller(TrainingController::class)->prefix('training')->group(function () {
         Route::post('/', 'store')->name('training.store');
@@ -100,7 +97,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', 'destroy')->name('training.destroy');
         Route::post('/register', 'register')->name('training.register');
     });
-
+    // Admin dashboard
+    Route::get('/dashboard', function () {
+        return auth()->user()->role !== 'admin' ? redirect('/') : view('admin.dashboard');
+    })->name('dashboard');
+});
     // Dagopvang
 
 
@@ -108,16 +109,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/dagopvang', [DagopvangController::class, 'store'])->name('dagopvang.store');
 
 
-    // Payment routes
-    Route::controller(ShopController::class)->prefix('payment')->group(function () {
-        Route::get('/', 'showPaymentPage')->name('payment');
-        Route::post('/', 'processPayment')->name('payment.process');
-    });
-
-    // Admin dashboard
-    Route::get('/dashboard', function () {
-        return auth()->user()->role !== 'admin' ? redirect('/') : view('admin.dashboard');
-    })->name('dashboard');
+Route::controller(DagopvangController::class)->prefix('dagopvang.payment')->group(function () {
+    Route::get('/', 'intakepayment')->name('dagopvang.payment');
+    Route::post('/', 'processintakepayment')->name('payment.intake');;
 });
+
 
 require __DIR__.'/auth.php';

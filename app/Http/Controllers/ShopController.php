@@ -31,7 +31,7 @@ class ShopController extends Controller
 
         if ($betalingGeslaagd) {
             // Na succesvolle betaling redirect naar bedankpagina
-            return redirect()->route('dagopvang.bedankt')->with('success', 'Betaling gelukt! Dank je wel.');
+            return redirect()->route('shop')->with('success', 'Bedankt! We gaan de betaling controleren en nemen contact met je op zodra deze is bevestigd.');
         } else {
             // Bij mislukte betaling terug naar betaalpagina met foutmelding
             return redirect()->back()->withErrors('Betaling is mislukt, probeer het opnieuw.');

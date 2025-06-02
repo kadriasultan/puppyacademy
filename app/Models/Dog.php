@@ -11,10 +11,12 @@ class Dog extends Model
 
     protected $fillable = [
         'user_id',
-        'name',
-        'nickname',
-        'breed',
-        'age',
+        'naam',
+        'naam_hond',
+        'geboortedatum',
+        'ras',
+        'geslacht',
+        'foto',
     ];
 
     public function user()

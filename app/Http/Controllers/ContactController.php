@@ -18,14 +18,18 @@ class ContactController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'phone' => 'required|regex:/^[0-9+\s\-()]{7,15}$/',
             'email' => 'required|email|max:255',
+            'onderwerp' => 'required|string|max:50',
             'message' => 'required|string|max:2000',
         ]);
 
         // 1. Opslaan van het bericht in de database
         $message = Message::create([
             'name' => $validated['name'],
+            'phone' => $validated['phone'],
             'email' => $validated['email'],
+            'onderwerp' => $validated['onderwerp'],
             'message' => $validated['message'],
         ]);
 
