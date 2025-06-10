@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TrainingenSeeder::class,
         ]);
+        $this->call([
+            HomepageSeeder::class,
+        ]);
     }
 }
