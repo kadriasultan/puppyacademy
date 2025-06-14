@@ -5,7 +5,7 @@
         <h2>Contacteer Ons</h2>
         <p>We horen graag van je! Vul het onderstaande formulier in en wij nemen zo snel mogelijk contact met je op.</p>
     </section>
-
+    <!-- Succesmelding tonen als sessie 'success' bestaat -->
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}

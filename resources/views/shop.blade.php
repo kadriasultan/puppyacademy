@@ -2,9 +2,10 @@
 
 @section('content')
     @php
-        $isAdmin = auth()->check() && auth()->user()->role === 'admin';
+        // Check of de ingelogde gebruiker een admin is
+            $isAdmin = auth()->check() && auth()->user()->role === 'admin';
     @endphp
-
+    {{-- Succesmelding --}}
     <main class="shop-page">
         @if(session('success'))
             <div class="alert alert-success" style=".alert-danger {
@@ -16,7 +17,7 @@
             </div>
         @endif
 
-
+            {{-- Foutmelding --}}
         @if(session('error'))
             <div class="alert alert-danger" style="color: #ffffff; font-weight: bold; text-align: center; background: red; padding: 10px 20px; border-radius: 8px;">
                 {{ session('error') }}
@@ -34,7 +35,7 @@
                         <p>{{ $course->description }}</p>
                         <p class="prijs">€{{ $course->price }}</p>
                         <button class="bestellen-button">Bestellen</button>
-
+                        {{-- Admin opties: bewerken en verwijderen --}}
                         @if ($isAdmin)
                             <button class="edit-toggle" onclick="toggleEditForm({{ $course->id }})">Bewerken</button>
                             <form action="{{ route('shop.destroy', $course->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je dit item wilt verwijderen?');">
@@ -42,7 +43,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn-delete">Verwijderen</button>
                             </form>
-
+                            {{-- Bewerken formulier (standaard verborgen) --}}
                             <form method="POST" action="{{ route('shop.update', $course->id) }}" enctype="multipart/form-data" class="shop-edit" id="edit-form-{{ $course->id }}" style="display:none;">
                                 @csrf
                                 @method('PUT')
@@ -62,7 +63,7 @@
                 @endforeach
             </div>
         </section>
-
+            {{-- Sectie DIY-pakketten --}}
         <section class="shop-section">
             <h2 class="shop-heading">DIY-pakketten</h2>
             <div class="shop-container">
@@ -75,13 +76,14 @@
                         <button class="bestellen-button">Bestellen</button>
 
                         @if ($isAdmin)
+                            {{-- Admin opties: bewerken en verwijderen --}}
                             <button class="edit-toggle" onclick="toggleEditForm({{ $diy->id }})">Bewerken</button>
                             <form action="{{ route('shop.destroy', $diy->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je dit item wilt verwijderen?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn-delete">Verwijderen</button>
                             </form>
-
+                            {{-- Bewerken formulier (standaard verborgen) --}}
                             <form method="POST" action="{{ route('shop.update', $diy->id) }}" enctype="multipart/form-data" class="shop-edit" id="edit-form-{{ $diy->id }}" style="display:none;">
                                 @csrf
                                 @method('PUT')
@@ -103,6 +105,7 @@
         </section>
 
         @if ($isAdmin)
+                {{-- Knop om het formulier om een nieuw item toe te voegen te tonen --}}
             <button id="show-add-form" onclick="toggleAddForm()">Voeg een nieuw item toe</button>
 
             <section class="shop-add" id="add-form" style="display:none;">
@@ -134,6 +137,6 @@
         @endif
     </main>
 
-
+    {{-- Script om edit en add formulieren te togglen --}}
     <script src="{{ asset('js/script.js') }}"></script>
 @endsection

@@ -5,9 +5,11 @@
     <section class="admin-dashboard">
         <h2>Beheer Dagopvang Inschrijvingen</h2>
 
+        {{-- Loop door alle inschrijvingen per datum --}}
         @foreach($dagopvangs as $datum => $inschrijvingen)
             <div class="card shadow-sm my-4">
                 <div class="card-header bg-primary text-white">
+                    {{-- Toon de datum van de inschrijvingen --}}
                     <h5 class="mb-0">📅 Inschrijvingen voor {{ \Carbon\Carbon::parse($datum)->format('d-m-Y') }}</h5>
                 </div>
 

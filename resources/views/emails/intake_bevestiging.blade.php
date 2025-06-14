@@ -20,19 +20,22 @@
 <ul>
     <li><strong>Naam:</strong> {{ $inschrijving['naam_hond'] }}</li>
     <li><strong>Geboortedatum Hond:</strong> {{ \Carbon\Carbon::parse($inschrijving['geboortedatum'])->format('d/m/Y') }}</li>
-
-
+    <!-- Foto van de hond weergegeven als base64 embedded image -->
     <li><strong>Ras:</strong> {{ $inschrijving['ras'] }}</li>
     <li><strong>Geslacht:</strong> {{ $inschrijving['geslacht'] }}</li>
     <li><strong>Foto van {{ $inschrijving['naam_hond'] }}:</strong><br>
 
         @php
-            $path = public_path($inschrijving['foto']);
-            $type = pathinfo($path, PATHINFO_EXTENSION);
-            $data = file_get_contents($path);
-            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            // Volledig pad naar de foto op de server
+               $path = public_path($inschrijving['foto']);
+                // Bestands extensie (bijv. jpg, png)
+               $type = pathinfo($path, PATHINFO_EXTENSION);
+               // Inhoud van het bestand ophalen
+               $data = file_get_contents($path);
+                // Data omzetten naar base64 voor inline afbeelding
+               $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         @endphp
-
+            <!-- Afbeelding met max breedte 200px en automatische hoogte -->
         <img src="{{ $base64 }}" alt="Foto van de hond" style="max-width:200px; height:auto;">
     </li>
 

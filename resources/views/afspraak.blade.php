@@ -3,13 +3,13 @@
 @section('content')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
-
+    <!-- Succesmelding tonen als sessie 'success' bestaat -->
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
-
+    <!-- Foutmelding tonen als sessie 'error' bestaat -->
     @if(session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -22,7 +22,7 @@
             <p>Je intakewandeling is succesvol geboekt.</p>
             <p>Plan nu je wandeling in via onze agenda:</p>
         </div>
-
+        <!-- Formulier voor het maken van een afspraak -->
         <div class="booking-card">
             <form method="POST" action="{{ route('afspraak.maken') }}" id="appointment-form">
                 @csrf
@@ -43,11 +43,12 @@
                     <label for="client-name">Jouw naam</label>
                     <input type="text" id="client-name" name="beschrijving" required placeholder="Vul je volledige naam in">
                 </div>
-
+                <!-- Verborgen veld om de geselecteerde datum + tijd mee te sturen -->
                 <input type="hidden" id="selected-datetime" name="start">
 
                 <button type="submit" class="submit-btn">
                     Afspraak bevestigen
+                    <!-- Pijltje SVG icoon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-5.904-2.854a.5.5 0 1 1 .707.708L6.707 9.95l2.843 2.846a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3z"/>
                     </svg>

@@ -9,7 +9,9 @@
 
 <h3>Beste {{ $name }},</h3>
 <p> Je hebt je succesvol ingeschreven voor de training:</p>
+<!-- Naam van de training, waarbij eerste letter hoofdletter is -->
 <h3>{{ ucfirst($training) }}.</h3>
+<!-- Informeert dat er binnenkort contact via e-mail volgt -->
 <p>We nemen binnenkort contact met je op via e-mail voor meer informatie.</p>
 <h3>Met vriendelijke groet,</h3>
 <h3>Puppy Power Academy</h3>

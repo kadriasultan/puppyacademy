@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
+    {{-- ntroductie van de dagopvang --}}
     <section class="hero">
         <h2>Dagopvang voor Honden</h2>
         <p>Een veilige, speelse en liefdevolle plek voor je hond wanneer jij er even niet kunt zijn.</p>
     </section>
+    {{-- Fotogalerij slider met afbeeldingen van de opvang --}}
     <div class="foto-galerij">
         <h3>Een kijkje in onze dagopvang</h3>
         <div class="slider" id="fotoSlider">
@@ -42,11 +43,11 @@
             <p><strong>Locatie:</strong> Hondencentrum Dierenrijk, Dagopvangstraat 12, 1234 AB Hondenstad</p>
             <p><strong>Prijs:</strong> €25 per dag, inclusief snacks en verzorging</p>
         </div>
-
+        {{-- Inschrijfformulier voor intake wandeling --}}
         <div class="inschrijf-formulier">
             <h4>Inschrijven voor een Intake</h4>
 
-
+            {{-- Succesmelding na succesvolle inschrijving --}}
             @if(session('success'))
                 <p style="color: green;">{{ session('success') }}</p>
             @endif
@@ -54,8 +55,9 @@
 
 
             <form action="{{ route('dagopvang.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+                @csrf {{-- CSRF beveiliging --}}
 
+                {{-- Gegevens eigenaar --}}
                 <h2>Eigenaar Gegevens</h2>
 
                 <label>Naam:
@@ -72,12 +74,13 @@
                     <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
                 </label><br>
-
+                {{-- Dropdown om hond te selecteren als deze aanwezig zijn --}}
                 @if($dogs->count())
                     <label for="dog_select">Selecteer een hond (indien van toepassing):</label>
                     <select id="dog_select" name="dog_id">
                         <option value="">-- Selecteer een hond --</option>
                         @foreach($dogs as $dog)
+                            {{-- Opties met data-attributen om formulier automatisch te vullen --}}
                             <option value="{{ $dog->id }}"
                                     ras="{{ $dog->ras }}"
                                     naam_hond="{{ $dog->naam_hond }}"
@@ -116,6 +119,7 @@
                 <label>Foto hond uploaden:
                     <input type="file" id="foto_hond" name="foto_hond" accept="image/*" required>
                 </label><br>
+                {{-- Preview van geüploade hondfoto, standaard verborgen --}}
                 <img id="hond_foto_preview" src="" alt="Foto van de hond" style="max-width: 250px; border-radius: 10px; display: none; margin-top: 1em;">
 
                 <p style="margin-top: 1em; font-size: 0.9em; color: #555;">

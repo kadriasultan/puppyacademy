@@ -6,11 +6,11 @@
 </head>
 <body>
 <h1>Bevestiging Dagopvang Inschrijving</h1>
-
+<!-- Aanspreking met de naam van de gebruiker -->
 <p>Beste {{ $user->name }},</p>
-
+<!-- Korte bevestigingstekst -->
 <p>Je inschrijving voor de honden dagopvang is succesvol ontvangen!</p>
-
+<!-- Overzicht van de ingevulde gegevens door de gebruiker -->
 <h3>Inschrijvingsgegevens:</h3>
 <ul>
     <li><strong>Naam van de hond:</strong> {{ $inschrijving['naam_hond'] }}</li>

@@ -7,16 +7,18 @@
     <h2>Personal Informatie</h2>
 
 </div>
+        {{-- Succesbericht na bijvoorbeeld update --}}
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                 {{ session('success') }}
             </div>
         @endif
+        {{-- Gebruikersinformatie --}}
         <div class="user-info">
             <p><strong>Naam:</strong> {{ $user->name }}</p>
             <p><strong>E-mail:</strong> {{ $user->email }}</p>
         </div>
-
+        {{-- Overzicht van de honden van de gebruiker --}}
         <div class="dogs-info">
             <h2>Mijn Honden</h2>
             @foreach($user->dogs as $dog)
@@ -27,6 +29,7 @@
                         {{ \Carbon\Carbon::parse($dog->geboortedatum)->format('d/m/Y') }}
                     </p>
                     <p><strong>Geslacht:</strong> {{ $dog->geslacht }}</p>
+                    {{-- Foto van de hond, als die bestaat --}}
                 @if($dog->foto)
                         <p><strong>Foto hond:</strong></p>
                         <img src="{{ asset( $dog->foto) }}" alt="Foto van de hond" style="max-width: 250px; border-radius: 10px;">
@@ -35,14 +38,14 @@
             @endforeach
 
         </div>
-
+        {{-- Intake gegevens, als die beschikbaar zijn --}}
         @if($intake)
             <h2>Intake Gegevens</h2>
             <p><strong>Naam hond:</strong> {{ $intake->naam_hond }}</p>
             <p><strong>Geboortedatum:</strong> {{ \Carbon\Carbon::parse($intake->geboortedatum)->format('d/m/Y') }}</p>
             <p><strong>Ras:</strong> {{ $intake->ras }}</p>
             <p><strong>Geslacht:</strong> {{ $intake->geslacht }}</p>
-
+            {{-- Foto van de intake hond, als die bestaat --}}
             @if($intake->foto)
                 <p><strong>Foto hond:</strong></p>
                 <img src="{{ asset( $intake->foto) }}" alt="Foto van {{ $dog->naam_hond }}" style="max-width: 250px; border-radius: 10px;">
@@ -50,7 +53,7 @@
         @else
             <p>Er is nog geen intake ingepland.</p>
         @endif
-
+        {{-- Formulier voor het verwijderen van het account --}}
         <form action="{{ route('profile.destroy', $user->id) }}" method="POST"
               onsubmit="return confirm('Weet je zeker dat je je account wilt verwijderen?');">
             @csrf
