@@ -1,5 +1,5 @@
 <header>
-    <header>
+
         <div class="logo-container">
             <img src="{{ asset('images/logo.png') }}" alt="Puppy Power Academy Logo" class="logo-image">
             <div class="logo-text">
@@ -10,7 +10,7 @@
                 <p class="welcome-text">Welkom {{ Auth::user()->name }}!</p>
             @endif
         </div>
-    </header>
+
 
 
     <button class="burger" onclick="toggleMenu()">
