@@ -1338,7 +1338,9 @@ header {
     position: relative;
     margin: 0;
 }
-
+.logo-image{
+    width: 33%;
+}
 .logo h1 {
     font-size: 24px;
     display: flex;
