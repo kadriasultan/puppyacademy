@@ -1,5 +1,5 @@
 <?php
-// Zorg dat je composer autoload hebt
+
 require __DIR__ . '/vendor/autoload.php';
 
 // Zet het pad naar je JSON service account file
@@ -32,8 +32,7 @@ function addAppointmentToCalendar($service, $calendarId, $startDateTime, $endDat
     return $event->getId();
 }
 
-// **Hier zet je de data van de betaling / afspraak**
-// Bijvoorbeeld dit haal je uit je betaalproces of formulier:
+
 $calendarId = 'puppypoweracademy2025@gmail.com';
 
 // Voorbeeld data (pas aan naar dynamische waarden)

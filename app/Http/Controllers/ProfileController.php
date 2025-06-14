@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Dagopvang;
 
-use App\Models\Intake; // Vergeet deze niet bovenaan als je hem nog niet hebt
+use App\Models\Intake;
 
 
 class ProfileController extends Controller
@@ -42,7 +42,7 @@ class ProfileController extends Controller
         }
 
         if (Auth::id() === $user->id) {
-            
+
 
             Auth::logout();
 

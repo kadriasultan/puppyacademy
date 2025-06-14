@@ -38,7 +38,7 @@ class IntakeController extends Controller
         $client->addScope(Google_Service_Calendar::CALENDAR);
         $client->setAccessType('offline');
 
-        // Zorg dat je hier de juiste token gebruikt (bijvoorbeeld opgeslagen in .env of database)
+
         $accessToken = json_decode(file_get_contents(storage_path('app/google-calendar/token.json')), true);
         $client->setAccessToken($accessToken);
 
