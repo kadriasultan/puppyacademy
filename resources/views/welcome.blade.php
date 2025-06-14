@@ -25,7 +25,8 @@
     </div>
 </div>
 @php
-    $isAdmin = auth()->check() && auth()->user()->role === 'admin';
+    // Controle of ingelogde gebruiker admin is (voor beheerdersrechten)
+       $isAdmin = auth()->check() && auth()->user()->role === 'admin';
 @endphp
 
 @if($owner)
@@ -33,7 +34,7 @@
         <div class="owner-container">
             <div class="owner-image">
                 <img id="owner-image-preview" src="{{ asset($owner->image) }}" alt="{{ $owner->name }}" style="max-width: 200px;">
-
+                {{-- Alleen admin mag eigenaar-afbeelding uploaden --}}
                 @if($isAdmin)
                     <input type="file" id="owner-image-upload" data-id="{{ $owner->id }}" style="display: none" onchange="uploadOwnerImage(this)">
                 @endif
@@ -48,6 +49,7 @@
                 </div>
 
                 @if($isAdmin)
+                    {{-- Formulier voor admin om eigenaarsteksten te bewerken --}}
                     <div id="owner-edit-form" style="display: none;">
                         <input type="text" id="edit-name" class="form-control" value="{{ $owner->name }}"><br>
                         <textarea id="edit-p1" class="form-control">{{ $owner->paragraph_1 }}</textarea><br>
@@ -65,7 +67,7 @@
         </div>
     </section>
 @endif
-
+{{-- Navigatie naar andere onderdelen van de site --}}
 <div class="container">
     <a href="/shop">
         <div class="inhoud">
@@ -93,6 +95,7 @@
 </body>
 @if($isAdmin)
     <script>
+        // Functie om het bewerkingsformulier te tonen en het display-formulier te verbergen
         function toggleEdit() {
             document.getElementById('owner-display').style.display = 'none';
             document.getElementById('owner-edit-form').style.display = 'block';
@@ -100,7 +103,7 @@
             document.getElementById('owner-image-upload').style.display = 'block';
             document.getElementById('save-button').style.display = 'inline-block';
         }
-
+        // Functie om de gewijzigde eigenaargegevens via AJAX op te slaan
         function saveOwnerSection(id) {
             const data = {
                 name: document.getElementById('edit-name').value,
@@ -142,6 +145,7 @@
     </script>
 @endif
 <script>
+    // Uploadfunctie voor eigenaar-afbeelding via AJAX
     function uploadOwnerImage(input) {
         const id = input.dataset.id;
         const file = input.files[0];
@@ -161,6 +165,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    // Bij succesvolle upload wordt de afbeelding geüpdatet op de pagina
                     document.getElementById('owner-image-preview').src = data.image_url;
                     alert('Afbeelding succesvol geüpload!');
                 } else {
