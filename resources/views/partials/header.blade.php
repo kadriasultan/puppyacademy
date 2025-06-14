@@ -1,10 +1,17 @@
 <header>
-    <div class="logo">
-        <h1><i class="fa-solid fa-paw"></i> Puppy Power Academy</h1>
-        @if (Auth::check())
-            <a>Welkom {{ Auth::user()->name }}!</a>
-        @endif
-    </div>
+    <header>
+        <div class="logo-container">
+            <img src="{{ asset('images/logo.png') }}" alt="Puppy Power Academy Logo" class="logo-image">
+            <div class="logo-text">
+                <span class="line1">Puppy Power</span>
+                <span class="line2">Academy</span>
+            </div>
+            @if (Auth::check())
+                <p class="welcome-text">Welkom {{ Auth::user()->name }}!</p>
+            @endif
+        </div>
+    </header>
+
 
     <button class="burger" onclick="toggleMenu()">
         <i class="fa-solid fa-bars"></i>
