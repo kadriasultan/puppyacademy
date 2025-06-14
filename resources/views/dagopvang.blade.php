@@ -45,7 +45,7 @@
         </div>
         {{-- Inschrijfformulier voor intake wandeling --}}
         <div class="inschrijf-formulier">
-            <h4>Inschrijven voor een Intake</h4>
+            <h4>aanmelden voor een Intake</h4>
 
             {{-- Succesmelding na succesvolle inschrijving --}}
             @if(session('success'))

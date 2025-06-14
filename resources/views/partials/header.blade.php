@@ -1,18 +1,16 @@
 <header>
-
-    <div class="logo-container">
-        <div class="logo-left">
+    <header>
+        <div class="logo-container">
+            <img src="{{ asset('images/logo.png') }}" alt="Puppy Power Academy Logo" class="logo-image">
             <div class="logo-text">
-                <img src="{{ asset('images/logo.png') }}" alt="Puppy Power Academy Logo" class="logo-image">
-                <p class="line1">Puppy Power</p>
-                <p class="line2">Academy</p>
+                <span class="line1">Puppy Power</span>
+                <span class="line2">Academy</span>
             </div>
+            @if (Auth::check())
+                <p class="welcome-text">Welkom {{ Auth::user()->name }}!</p>
+            @endif
         </div>
-
-        @if (Auth::check())
-            <p class="welcome-text">Welkom {{ Auth::user()->name }}!</p>
-        @endif
-    </div>
+    </header>
 
 
     <button class="burger" onclick="toggleMenu()">
@@ -45,64 +43,16 @@
         </div>
     </nav>
 </header>
-
 <style>
-    .logo-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #026556;
-        border-bottom: 1px solid #ddd;
-        flex-wrap: wrap;
-height: 100px    }
-
-    .logo-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .logo-image {
-        height: 55px;
-        width: 170px;
-    }
-
-    .logo-text {
-        font-family: 'Arial', sans-serif;
-text-align: center;
-    }
-
-    .logo-text .line1 {
-        color: #ffffff;
-        padding: 0;
-        margin: 0;
-    }
-
-    .logo-text .line2 {
-        color: #ffffff;
-        text-align: center;
-    }
-
-    .welcome-text {
-        font-size: 0.95rem;
-        color: #4caf50;
-        font-weight: 500;
+    nav a {
+        color: white;
     }
 
     @media (max-width: 768px) {
-        .logo-container {
-            flex-direction: column;
-            align-items: flex-start;
-
+        nav.show a {
+            color: black;
         }
-
-        .welcome-text {
-            margin-top: 10px;
-        }
-
-
     }
-
 
 </style>
 

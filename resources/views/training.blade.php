@@ -2,12 +2,10 @@
 
 @section('content')
     @php
-        // Controleer of de ingelogde gebruiker een admin is
-            $isAdmin = auth()->check() && auth()->user()->role === 'admin';
+        $isAdmin = auth()->check() && auth()->user()->role === 'admin';
     @endphp
     <div class="training-platform-page">
         <section class="training-header">
-            {{-- Toon een statusbericht als er een in de sessie zit --}}
             @if (session('status'))
                 <div class="mb-4 text-sm text-green-600" style="color: green" role="alert">
                     {{ session('status') }}
@@ -18,24 +16,22 @@
         </section>
 
         <div class="training-cards-container">
-            {{-- Loop door alle trainingen en toon ze --}}
             @foreach ($courses as $course)
                 <div class="product-card">
-                    {{-- Afbeelding van de training --}}
                     <img src="{{ asset('images/' . $course->image) }}" alt="{{ $course->title }}">
                     <h4 class="product-title">{{ $course->title }}</h4>
                     <p>{{ $course->description }}</p>
 
-                    {{-- Alleen admin mag trainingen bewerken/verwijderen --}}
+
+
                     @if ($isAdmin)
                         <button class="edit-toggle" onclick="toggleEditForm({{ $course->id }})">Bewerken</button>
-                        {{-- Verwijderknop met bevestiging --}}
                         <form action="{{ route('training.destroy', $course->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze training wilt verwijderen?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-delete">Verwijderen</button>
                         </form>
-                        {{-- Bewerken formulier, standaard verborgen --}}
+
                         <form method="POST" action="{{ route('training.update', $course->id) }}" enctype="multipart/form-data" class="shop-edit" id="edit-form-{{ $course->id }}" style="display:none;">
                             @csrf
                             @method('PUT')
@@ -57,11 +53,10 @@
         <h2>Training Videos</h2>
 
         <div class="shop-container">
-            {{-- Loop door alle video items --}}
             @foreach ($videos as $video)
                 <div class="product-card">
                         <div class="course-item">
-                            {{-- Video element met controls --}}
+
                                 <video width="100%" controls>
                                     <source src="{{ asset('videos/' . $video->video) }}" type="video/mp4">
                                     Your browser does not support the video tag.
@@ -73,7 +68,7 @@
 
                     <h4 class="product-title">{{ $video->title }}</h4>
                     <p>{{ $video->description }}</p>
-                    {{-- Admin opties voor video --}}
+
                     @if ($isAdmin)
                         <button class="edit-toggle" onclick="toggleEditForm({{ $video->id }})">Bewerken</button>
 
@@ -108,7 +103,6 @@
 
         <section class="training-form-section">
             <h2>Inschrijven</h2>
-            {{-- Inschrijfformulier voor trainingen --}}
             <form class="training-form" method="POST" action="{{ route('training.register') }}">
                 @csrf
 
@@ -116,9 +110,7 @@
                     <label for="training">Kies je training</label>
                     <select id="training" name="training" required class="form-control">
                         <option value="" disabled selected>Kies een training</option>
-                        {{-- Vul dropdown met trainingen --}}
-
-                    @foreach ($courses as $course)
+                        @foreach ($courses as $course)
                         <option value="{{ $course->title }}">{{ $course->title }}</option>
                         @endforeach
 
@@ -139,7 +131,6 @@
             </form>
         </section>
     </div>
-    {{-- Alleen voor admin: knop en formulier om nieuwe trainingen of video's toe te voegen --}}
     @if ($isAdmin)
 
         <button id="show-add-form" onclick="toggleAddForm()">Voeg een nieuwe training of video toe</button>
@@ -161,7 +152,7 @@
                 <label for="description">Beschrijving</label>
                 <textarea name="description" id="description" placeholder="Beschrijving"></textarea>
 
-                {{-- Alleen afbeelding of video invoer afhankelijk van type --}}
+
                 <div id="image-container">
                 <label for="image">Afbeelding</label>
                 <input type="file" name="image" id="image">
@@ -175,7 +166,6 @@
             </form>
         </section>
     @endif
-    {{-- Laad JavaScript voor toggles van formulieren --}}
     <script src="{{ asset('js/script.js') }}"></script>
 
 @endsection
