@@ -2,9 +2,12 @@
 
 @section('content')
     @php
+        // Check of gebruiker admin is
         $isAdmin = auth()->check() && auth()->user()->role === 'admin';
     @endphp
+
     <div class="training-platform-page">
+        <!-- Header met statusmelding en titels -->
         <section class="training-header">
             @if (session('status'))
                 <div class="mb-4 text-sm text-green-600" style="color: green" role="alert">
@@ -15,6 +18,7 @@
             <h2>Trainingen</h2>
         </section>
 
+        <!-- Overzicht van trainingen (als kaarten) -->
         <div class="training-cards-container">
             @foreach ($courses as $course)
                 <div class="product-card">
@@ -22,16 +26,17 @@
                     <h4 class="product-title">{{ $course->title }}</h4>
                     <p>{{ $course->description }}</p>
 
-
-
                     @if ($isAdmin)
+                        <!-- Admin: knop voor bewerken en verwijderen -->
                         <button class="edit-toggle" onclick="toggleEditForm({{ $course->id }})">Bewerken</button>
+
                         <form action="{{ route('training.destroy', $course->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze training wilt verwijderen?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-delete">Verwijderen</button>
                         </form>
 
+                        <!-- Admin: bewerkformulier -->
                         <form method="POST" action="{{ route('training.update', $course->id) }}" enctype="multipart/form-data" class="shop-edit" id="edit-form-{{ $course->id }}" style="display:none;">
                             @csrf
                             @method('PUT')
@@ -39,8 +44,6 @@
                             <input type="text" name="title" value="{{ $course->title }}" required>
                             <label for="description-{{ $course->id }}">Beschrijving</label>
                             <textarea name="description" id="description-{{ $course->id }}" required>{{ $course->description }}</textarea>
-
-
                             <label for="image-{{ $course->id }}">Afbeelding</label>
                             <input type="file" name="image">
                             <button type="submit">Bewerken</button>
@@ -50,50 +53,40 @@
             @endforeach
         </div>
 
+        <!-- Sectie met trainingsvideo's -->
         <h2>Training Videos</h2>
-
         <div class="shop-container">
             @foreach ($videos as $video)
                 <div class="product-card">
-                        <div class="course-item">
-
-                                <video width="100%" controls>
-                                    <source src="{{ asset('videos/' . $video->video) }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-
-                        </div>
-
-
+                    <div class="course-item">
+                        <video width="100%" controls>
+                            <source src="{{ asset('videos/' . $video->video) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
 
                     <h4 class="product-title">{{ $video->title }}</h4>
                     <p>{{ $video->description }}</p>
 
                     @if ($isAdmin)
+                        <!-- Admin: bewerk- en verwijdermogelijkheden voor video's -->
                         <button class="edit-toggle" onclick="toggleEditForm({{ $video->id }})">Bewerken</button>
 
-                        {{-- Verwijderknop --}}
                         <form action="{{ route('training.destroy', $video->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Weet je zeker dat je deze video wilt verwijderen?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-delete">Verwijderen</button>
                         </form>
 
-                        {{-- Bewerkformulier --}}
                         <form method="POST" action="{{ route('training.update', $video->id) }}" enctype="multipart/form-data" class="shop-edit" id="edit-form-{{ $video->id }}" style="display:none;">
                             @csrf
                             @method('PUT')
-
                             <label for="title-{{ $video->id }}">Titel</label>
                             <input type="text" name="title" value="{{ $video->title }}">
-
                             <label for="description-{{ $video->id }}">Beschrijving</label>
                             <textarea name="description" id="description-{{ $video->id }}">{{ $video->description }}</textarea>
-
-
                             <label for="video">Video Bestand (MP4)</label>
                             <input type="file" name="video" id="video" accept="video/mp4">
-
                             <button type="submit">Opslaan</button>
                         </form>
                     @endif
@@ -101,19 +94,18 @@
             @endforeach
         </div>
 
+        <!-- Inschrijfformulier voor trainingen -->
         <section class="training-form-section">
             <h2>Inschrijven</h2>
             <form class="training-form" method="POST" action="{{ route('training.register') }}">
                 @csrf
-
                 <div class="form-group">
                     <label for="training">Kies je training</label>
                     <select id="training" name="training" required class="form-control">
                         <option value="" disabled selected>Kies een training</option>
                         @foreach ($courses as $course)
-                        <option value="{{ $course->title }}">{{ $course->title }}</option>
+                            <option value="{{ $course->title }}">{{ $course->title }}</option>
                         @endforeach
-
                     </select>
                 </div>
 
@@ -131,10 +123,12 @@
             </form>
         </section>
     </div>
-    @if ($isAdmin)
 
+    @if ($isAdmin)
+        <!-- Admin: knop om inhoud toe te voegen -->
         <button id="show-add-form" onclick="toggleAddForm()">Voeg een nieuwe training of video toe</button>
 
+        <!-- Admin: formulier om nieuwe training of video toe te voegen -->
         <section class="shop-add" id="add-form" style="display:none;">
             <h3>Inhoud toevoegen</h3>
             <form method="POST" action="{{ route('training.store') }}" enctype="multipart/form-data">
@@ -152,11 +146,11 @@
                 <label for="description">Beschrijving</label>
                 <textarea name="description" id="description" placeholder="Beschrijving"></textarea>
 
-
                 <div id="image-container">
-                <label for="image">Afbeelding</label>
-                <input type="file" name="image" id="image">
+                    <label for="image">Afbeelding</label>
+                    <input type="file" name="image" id="image">
                 </div>
+
                 <div id="video-container">
                     <label for="video">Video Bestand (MP4)</label>
                     <input type="file" name="video" id="video" accept="video/mp4">
@@ -166,6 +160,7 @@
             </form>
         </section>
     @endif
-    <script src="{{ asset('js/script.js') }}"></script>
 
+    <!-- JavaScript-bestand -->
+    <script src="{{ asset('js/script.js') }}"></script>
 @endsection
