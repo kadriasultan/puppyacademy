@@ -44,7 +44,7 @@
         </div>
 
         <div class="inschrijf-formulier">
-            <h4>Inschrijven voor een Intake</h4>
+            <h4>aanmelden voor een Intake</h4>
 
 
             @if(session('success'))
